@@ -11,7 +11,7 @@ import sys
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        
+
         # Set the default value for variable
         self.button_is_checked = True
 
@@ -32,6 +32,7 @@ class MainWindow(QMainWindow):
         self.button_is_checked = is_checked
 
         print(self.button_is_checked)
+
 
 # Create an instance of QApplication
 app = QApplication(sys.argv)

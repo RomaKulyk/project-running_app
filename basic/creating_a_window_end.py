@@ -2,6 +2,7 @@ from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
 import sys
 
+
 # Subclass QMainWindow to customize your application's main window
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -10,7 +11,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("My App")
 
         button = QPushButton("Press Me")
-        
+
         # Set the fixed size of the Window
         self.setFixedSize(QSize(400, 300))
 
@@ -22,6 +23,7 @@ class MainWindow(QMainWindow):
 
         # Set the central widget of the Window
         self.setCentralWidget(button)
+
 
 # Create an instance of QApplication
 app = QApplication(sys.argv)

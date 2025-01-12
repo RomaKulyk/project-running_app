@@ -23,6 +23,7 @@ class MainWindow(QMainWindow):
     def the_button_was_clicked(self):
         print("Clicked!")
 
+
 # Create an instance of QApplication
 app = QApplication(sys.argv)
 

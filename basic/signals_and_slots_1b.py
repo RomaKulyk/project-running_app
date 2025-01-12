@@ -22,6 +22,7 @@ class MainWindow(QMainWindow):
         # Set the central widget of the Window
         self.setCentralWidget(button)
 
+
     def the_button_was_clicked(self):
         print("Clicked!")
 
