@@ -1,4 +1,5 @@
 import sys
+from data_form import RunDataForm
 from PyQt5.QtWidgets import (QApplication,
                              QWidget,
                              QPushButton,
@@ -46,12 +47,18 @@ class LoginForm(QWidget):
 
         if self.lineEdit_username.text() == 'R2D2'\
         and self.lineEdit_password.text() == '1234':
-            msg.setText('Success')
-            msg.exec_()
-            app.quit()
+            # It opens the second app's window if password and login is correct
+            self.openRunDataForm()
+            # It closes login window
+            self.close()
+
         else:
             msg.setText('Incorrect Password')
-        msg.exec_()
+            msg.exec_()
+
+    def openRunDataForm(self):
+        self.secondWindow = RunDataForm()
+        self.secondWindow.show()
 
 
 if __name__ == '__main__':
