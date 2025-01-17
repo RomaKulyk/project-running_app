@@ -1,11 +1,11 @@
 import sys
-from PyQt5.QtWidgets import (QApplication,
-                             QWidget,
+import datetime
+import csv
+from PyQt5.QtWidgets import (QWidget,
                              QPushButton,
                              QLabel,
                              QLineEdit,
-                             QGridLayout,
-                             QMessageBox)
+                             QGridLayout,)
 
 
 class RunDataForm(QWidget):
@@ -18,7 +18,7 @@ class RunDataForm(QWidget):
 
         label_distance = QLabel('<font size="4"> Distance </font>')
         self.lineEdit_distance = QLineEdit()
-        self.lineEdit_distance.setPlaceholderText('Please enter distance: km')
+        self.lineEdit_distance.setPlaceholderText('Please enter distance: KK:MMM')
         layout.addWidget(label_distance, 0, 0)
         layout.addWidget(self.lineEdit_distance, 0, 1)
 
@@ -38,6 +38,32 @@ class RunDataForm(QWidget):
         layout.setRowMinimumHeight(2, 75)
 
         self.setLayout(layout)
+    
+    def get_week_number(self):
+        """This method allows to get week's number."""
+        today = datetime.date.today()            
+        return today.isocalendar()[1]
+        
 
     def input_data(self):
-        pass
+        """
+        This method input data to the output.csv file in the following format:
+        week number, distance and time.
+        """
+        week_number = str(self.get_week_number())
+        text = (week_number + " " +self.lineEdit_distance.text() + 
+                " " + self.lineEdit_time.text())
+
+        with open('output.csv', mode='a', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow([text])
+        
+        print("Data saved to output.csv")
+       
+    
+    
+
+    
+    
+
+    
