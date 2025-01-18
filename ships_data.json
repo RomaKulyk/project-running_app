@@ -1,0 +1,18 @@
+{
+    "teams": [
+        {
+            "name": "Team A",
+            "ships": [
+                {"name": "Ship A1", "power": 80, "armor": 100.0},
+                {"name": "Ship A2", "power": 70, "armor": 95.0}
+            ]
+        },
+        {
+            "name": "Team B",
+            "ships": [
+                {"name": "Ship B1", "power": 85, "armor": 110.0},
+                {"name": "Ship B2", "power": 65, "armor": 90.0}
+            ]
+        }
+    ]
+}
