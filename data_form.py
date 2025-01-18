@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import (QWidget,
                              QLabel,
                              QLineEdit,
                              QGridLayout,)
+from PyQt5.QtGui import QPixmap, QPainter
 
 # Subclass QWidget to customize your application's main widget
 class RunDataForm(QWidget):
@@ -22,7 +23,11 @@ class RunDataForm(QWidget):
         """
     def __init__(self):
         super().__init__()
+        # Load image 
+        self.image = QPixmap("running_man.jpg")
+        # Set window title
         self.setWindowTitle('Running App')
+        # Set window sizes
         self.resize(350, 500)
         self.setMinimumHeight(300)
         self.setMinimumWidth(250)
@@ -38,7 +43,6 @@ class RunDataForm(QWidget):
         label_time = QLabel('<font size="4"> Time </font>')
         self.lineEdit_time = QLineEdit()
         self.lineEdit_time.setPlaceholderText('Please enter time: HH:MM:SS')
-
         # Set the maximum number of characters which can be entered to 8
         self.lineEdit_time.setMaxLength(8)
 
@@ -77,3 +81,8 @@ class RunDataForm(QWidget):
     def calculate_average_temp_for_week(self):
         """This method allows to calculate an average temp for certain week"""
         pass
+
+    def paintEvent(self, event):
+        """Override the paintEvent to handle custom painting for the widget"""
+        painter = QPainter(self) 
+        painter.drawPixmap(self.rect(), self.image)
