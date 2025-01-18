@@ -10,10 +10,20 @@ from PyQt5.QtWidgets import (QApplication,
 
 
 class LoginForm(QWidget):
+    """
+    init
+        This is an inizialization method
+    check_creds
+        This is a method to check if user has a permission to use app
+    open_run_data_form
+        This is a method which opens another window after authorisation
+    """
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('Login Form')
-        self.resize(250, 120)
+        self.setWindowTitle('Running App')
+        self.resize(350, 500)
+        self.setMinimumHeight(300)
+        self.setMinimumWidth(250)
 
         layout = QGridLayout()
 
@@ -42,7 +52,8 @@ class LoginForm(QWidget):
 
         self.setLayout(layout)
 
-    def check_password(self):
+    def check_creds(self):
+        """This is a method to check if user has a permission to use app"""
         msg = QMessageBox()
 
         if self.lineEdit_username.text() == 'R2D2'\
@@ -56,7 +67,8 @@ class LoginForm(QWidget):
             msg.setText('Incorrect Password')
             msg.exec_()
 
-    def openRunDataForm(self):
+    def open_run_data_form(self):
+        """This is a method which opens another window after authorisation"""
         self.secondWindow = RunDataForm()
         self.secondWindow.show()
 

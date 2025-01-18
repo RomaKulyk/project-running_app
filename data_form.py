@@ -7,12 +7,25 @@ from PyQt5.QtWidgets import (QWidget,
                              QLineEdit,
                              QGridLayout,)
 
-
+# Subclass QWidget to customize your application's main widget
 class RunDataForm(QWidget):
+    """
+    init
+        This is an inizialization method
+    get_week_number
+        This method allows to get week's number
+    input_data
+        This method input data to the output.csv file in the following format:
+        week number, distance and time
+    calculate_average_temp_for_week
+        This method allows to calculate an average temp for certain week
+        """
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('Run Data Form')
-        self.resize(250, 120)
+        self.setWindowTitle('Running App')
+        self.resize(350, 500)
+        self.setMinimumHeight(300)
+        self.setMinimumWidth(250)
 
         layout = QGridLayout()
 
@@ -40,30 +53,27 @@ class RunDataForm(QWidget):
         self.setLayout(layout)
     
     def get_week_number(self):
-        """This method allows to get week's number."""
+        """This method allows to get week's number"""
         today = datetime.date.today()            
         return today.isocalendar()[1]
-        
 
     def input_data(self):
         """
         This method input data to the output.csv file in the following format:
-        week number, distance and time.
+        week number, distance and time
         """
         week_number = str(self.get_week_number())
-        text = (week_number + " " +self.lineEdit_distance.text() + 
-                " " + self.lineEdit_time.text())
+        text = (week_number + "\t" + self.lineEdit_distance.text() + 
+                "\t" + self.lineEdit_time.text())
 
         with open('output.csv', mode='a', newline='') as file:
             writer = csv.writer(file)
             writer.writerow([text])
         
+        self.lineEdit_distance.clear()
+        self.lineEdit_time.clear()
         print("Data saved to output.csv")
-       
-    
-    
-
-    
-    
-
-    
+        
+    def calculate_average_temp_for_week(self):
+        """This method allows to calculate an average temp for certain week"""
+        pass
