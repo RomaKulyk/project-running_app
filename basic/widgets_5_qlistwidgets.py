@@ -7,7 +7,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("My App")
         widget = QListWidget()
-        widget.setSelectionMode(QListWidget.NoSelection)
+        widget.setSelectionMode(QListWidget.SingleSelection)
         widget.addItems(["One", "Two", "Three"])
         widget.currentItemChanged.connect(self.item_changed)
         widget.currentTextChanged.connect(self.text_changed)
