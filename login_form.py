@@ -81,7 +81,6 @@ class LoginForm(QWidget):
         painter = QPainter(self) 
         painter.drawPixmap(self.rect(), self.image)
 
-
 if __name__ == '__main__':
     # Create an instance of QApplication
     app = QApplication(sys.argv)
