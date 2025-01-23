@@ -19,38 +19,35 @@ class RunDataForm(QWidget):
     """
     init
         This is an inizialization method
+
     get_week_number
         This method allows to get week's number
+
     input_data
         This method input data to the input_file in the following format:
         week number, distance and time
-    calculate_average_temp_for_week
-        This method allows to calculate an average temp for certain week
-    calculate_average_temp_for_month
-        This method allows to calculate an average temp for certain month
-    calculate_average_temp_for_year
-        This method allows to calculate an average temp for the year
-    calculate_total time_for_week
-        This method allows to calculate a total time for certain week
-    calculate_total_time_for_month
-        This method allows to calculate a total time for certain month
-    calculate_total_time_for_year
-        This method allows to calculate a total time for the year
-    calculate_total_distance_for_week
-        This method allows to calculate a total distance for certain week
-    calculate_total_distance_for_month
-        This method allows to calculate a total distance for certain month
-    calculate_total_distance_for_year
-        This method allows to calculate a total distance for the year
-        """
+
+    calculate_average_temp
+        This method calculates average temp for a given period
+        (week, month, year)
+    
+    calculate_total_time
+        This method calculates total time for a given period
+        (week, month, year)
+
+    calculate_total_distance
+        This method calculates total distance for a given period
+        (week, month, year)
+    """
+
     def __init__(self):
         super().__init__()
         # Load image
-        self.image = QPixmap("running_man.jpg")
+        self.image = QPixmap("image_2.png")
         # Set window title
         self.setWindowTitle('Running App')
         # Set window sizes
-        self.resize(350, 500)
+        self.resize(325, 475)
         self.setMinimumHeight(300)
         self.setMinimumWidth(250)
 
@@ -77,6 +74,21 @@ class RunDataForm(QWidget):
         button_upload = QPushButton('Input Data')
         button_upload.clicked.connect(self.input_data)
         layout.addWidget(button_upload, 2, 0, 1, 2)
+        layout.setRowMinimumHeight(2, 75)
+
+        button_upload = QPushButton('Calculate total time')
+        button_upload.clicked.connect(self.input_data)
+        layout.addWidget(button_upload, 3, 0, 1, 2)
+        layout.setRowMinimumHeight(2, 75)
+         
+        button_upload = QPushButton('Calculate total distance')
+        button_upload.clicked.connect(self.input_data)
+        layout.addWidget(button_upload, 4, 0, 1, 2)
+        layout.setRowMinimumHeight(2, 75)
+        
+        button_upload = QPushButton('Calculate averate temp')
+        button_upload.clicked.connect(self.input_data)
+        layout.addWidget(button_upload, 5, 0, 1, 2)
         layout.setRowMinimumHeight(2, 75)
 
         self.setLayout(layout)
@@ -137,19 +149,83 @@ class RunDataForm(QWidget):
          
         self.lineEdit_distance.clear()
         self.lineEdit_time.clear()
-        self.calculate_total_time_for_week(4)  # To print total time for week
-    
-    def calculate_average_temp_for_week(self):
-        """This method allows to calculate an average temp for certain week"""
+            
+    def calculate_average_temp(self):
+        """This method calculates average temp for a given period
+        (week, month, year)"""
         pass
 
-    def calculate_average_temp_for_month(self):
-        """This method allows to calculate an average temp for certain month"""
-        pass
+    def calculate_total_time(period_type, period_value, input_file):
+        """This method calculates total time for a given period
+        (week, month, year)"""
+
+        total_time = timedelta()
+
+        with open(input_file, mode='r', newline='') as file:
+            reader = csv.DictReader(file, delimiter='\t')
+            for row in reader:
+                date_str = row['date']
+                date_parts = date_str.split('-')
+                row_year = int(date_parts[0])
+                row_month = int(date_parts[1])
+                row_week = int(row['week']) if 'week' in row else None
+                
+                time_str = row['time']
+                h, m, s = map(int, time_str.split(':'))
+                duration = timedelta(hours=h, minutes=m, seconds=s)
+                
+                if period_type == 'week' and row_week == period_value:
+                    total_time += duration
+                elif period_type == 'month' and row_year == period_value[0]\
+                      and row_month == period_value[1]:
+                    total_time += duration
+                elif period_type == 'year' and row_year == period_value:
+                    total_time += duration
+
+        total_seconds = int(total_time.total_seconds())
+        total_hours, remainder = divmod(total_seconds, 3600)
+        total_minutes, total_seconds = divmod(remainder, 60)
+        total_time = f"{total_hours:02}:{total_minutes:02}:{total_seconds:02}"
+
+        print(f"Total time for {period_type} {period_value} is:", total_time)
+    calculate_total_time('week', 4, 'running_data.csv')
+    calculate_total_time('month', (2025, 1), 'running_data.csv')
+    calculate_total_time('year', 2025, 'running_data.csv')
+
+    def calculate_total_distance(period_type, period_value, input_file):
+        """This method calculates total distance for a given period
+        (week, month, year)
+        """
+        total_distance = 0.0
     
-    def calculate_average_temp_for_year(self):
-        """This method allows to calculate an average temp for the year"""
-        pass
+        with open(input_file, mode='r', newline='') as file:
+            reader = csv.DictReader(file, delimiter='\t')
+            for row in reader:
+                date_str = row['date']
+                date_parts = date_str.split('-')
+                row_year = int(date_parts[0])
+                row_month = int(date_parts[1])
+                row_week = int(row['week']) if 'week' in row else None
+                distance = float(row['distance'])
+                
+                if period_type == 'week' and row_week == period_value:
+                    total_distance += distance
+                elif period_type == 'month' and row_year == period_value[0] and row_month == period_value[1]:
+                    total_distance += distance
+                elif period_type == 'year' and row_year == period_value:
+                    total_distance += distance
+        
+        print(f"Total distance for {period_type} {period_value}: {total_distance:.2f} kms")
+
+    # Usage examples
+    calculate_total_distance('week', 4, 'running_data.csv')
+    calculate_total_distance('month', (2025, 1), 'running_data.csv')
+    calculate_total_distance('year', 2025, 'running_data.csv')
+    
+    def paintEvent(self, event):
+        """Override the paintEvent to handle custom painting for the widget"""
+        painter = QPainter(self)
+        painter.drawPixmap(self.rect(), self.image)
 
     def print_the_whole_file():
         with open(input_file, mode='r', newline='') as file:
@@ -161,55 +237,6 @@ class RunDataForm(QWidget):
             print(row)
     # print_the_whole_file()
 
-    def calculate_total_time_for_week(self, week):
-        """This method allows to calculate a total time for certain week"""
-        
-        target_week = str(week)
-        # Initialize total time as a timedelta object
-        total_time = timedelta()
-        with open(input_file, mode='r', newline='') as file:
-            reader = csv.DictReader(file, delimiter='\t')
-            # Read the CSV file and sum the time for the target week
-            for row in reader:
-                if row['week'] == target_week:
-                    time_str =  row['time']
-                    time_parts = list(map(int, time_str.split(':'))) 
-                    duration = timedelta(hours=time_parts[0], 
-                                        minutes=time_parts[1], 
-                                        seconds=time_parts[2]) 
-                    total_time += duration
-                    
-        # Format total_time as hours, minutes, and seconds 
-        total_hours, remainder = divmod(total_time.total_seconds(), 3600) 
-        total_minutes, total_seconds = divmod(remainder, 60) 
-        print(f"Total time for week {target_week}: "
-        f"{int(total_hours):02}:{int(total_minutes):02}:{int(total_seconds):02}")
-        
-    def calculate_total_time_for_month(self):
-        """This method allows to calculate a total time for certain month"""
-        pass
-    
-    def calculate_total_time_for_year(self):
-        """This method allows to calculate a total time for the year"""
-        pass
-
-    def calculate_total_distance_for_week(self):
-        """This method allows to calculate a total distance for certain week"""
-        pass
-
-    def calculate_total_distance_for_month(self):
-        """This method allows to calculate a total distance for certain month"""
-        pass
-    
-    def calculate_total_distance_for_year(self):
-        """This method allows to calculate a total distance for the year"""
-        pass
-    
-    def paintEvent(self, event):
-        """Override the paintEvent to handle custom painting for the widget"""
-        painter = QPainter(self)
-        painter.drawPixmap(self.rect(), self.image)
-
-# TO-DO_1 - create calculate_average_temp_for_... week, month, year methods
-# TO-DO_2 - create calculate_total_time_for_... week, month, year methods
-# TO-DO_3 - create calculate_total_distance_for_... week, month, year methods
+# TO-DO_1 - create calculate_average_temp... week, month, year methods
+# TO-DO_2 - create calculate_total_time... week, month, year methods - DONE
+# TO-DO_3 - create calculate_total_distance... week, month, year methods - DONE

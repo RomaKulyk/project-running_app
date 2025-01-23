@@ -23,11 +23,11 @@ class LoginForm(QWidget):
     def __init__(self):
         super().__init__()
         # Load image 
-        self.image = QPixmap("running_man.jpg")
+        self.image = QPixmap("image_1.png")
         # Set window title
         self.setWindowTitle('Running App')
         # Set window sizes
-        self.resize(350, 500)
+        self.resize(325, 475)
         self.setMinimumHeight(300)
         self.setMinimumWidth(250)
 
