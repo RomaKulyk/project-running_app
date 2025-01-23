@@ -27,17 +27,9 @@ class RunDataForm(QWidget):
         This method input data to the input_file in the following format:
         week number, distance and time
 
-    calculate_average_temp
-        This method calculates average temp for a given period
-        (week, month, year)
-    
-    calculate_total_time
-        This method calculates total time for a given period
-        (week, month, year)
-
-    calculate_total_distance
-        This method calculates total distance for a given period
-        (week, month, year)
+    calculate_metrics
+        This method calculates total time, total distance, and average pace for
+        a given period (week, month, year) or a specific run
     """
 
     def __init__(self):
@@ -150,78 +142,55 @@ class RunDataForm(QWidget):
         self.lineEdit_distance.clear()
         self.lineEdit_time.clear()
             
-    def calculate_average_temp(self):
-        """This method calculates average temp for a given period
-        (week, month, year)"""
-        pass
-
-    def calculate_total_time(period_type, period_value, input_file):
-        """This method calculates total time for a given period
-        (week, month, year)"""
-
-        total_time = timedelta()
-
-        with open(input_file, mode='r', newline='') as file:
-            reader = csv.DictReader(file, delimiter='\t')
-            for row in reader:
-                date_str = row['date']
-                date_parts = date_str.split('-')
-                row_year = int(date_parts[0])
-                row_month = int(date_parts[1])
-                row_week = int(row['week']) if 'week' in row else None
-                
-                time_str = row['time']
-                h, m, s = map(int, time_str.split(':'))
-                duration = timedelta(hours=h, minutes=m, seconds=s)
-                
-                if period_type == 'week' and row_week == period_value:
-                    total_time += duration
-                elif period_type == 'month' and row_year == period_value[0]\
-                      and row_month == period_value[1]:
-                    total_time += duration
-                elif period_type == 'year' and row_year == period_value:
-                    total_time += duration
-
-        total_seconds = int(total_time.total_seconds())
-        total_hours, remainder = divmod(total_seconds, 3600)
-        total_minutes, total_seconds = divmod(remainder, 60)
-        total_time = f"{total_hours:02}:{total_minutes:02}:{total_seconds:02}"
-
-        print(f"Total time for {period_type} {period_value} is:", total_time)
-    calculate_total_time('week', 4, 'running_data.csv')
-    calculate_total_time('month', (2025, 1), 'running_data.csv')
-    calculate_total_time('year', 2025, 'running_data.csv')
-
-    def calculate_total_distance(period_type, period_value, input_file):
-        """This method calculates total distance for a given period
-        (week, month, year)
-        """
-        total_distance = 0.0
+def calculate_metrics(period_type, period_value, input_file, run_id=None):
+    """Calculate total time, total distance, and average pace for
+    a given period (week, month, year) or a specific run."""
     
-        with open(input_file, mode='r', newline='') as file:
-            reader = csv.DictReader(file, delimiter='\t')
-            for row in reader:
-                date_str = row['date']
-                date_parts = date_str.split('-')
-                row_year = int(date_parts[0])
-                row_month = int(date_parts[1])
-                row_week = int(row['week']) if 'week' in row else None
-                distance = float(row['distance'])
-                
-                if period_type == 'week' and row_week == period_value:
-                    total_distance += distance
-                elif period_type == 'month' and row_year == period_value[0] and row_month == period_value[1]:
-                    total_distance += distance
-                elif period_type == 'year' and row_year == period_value:
-                    total_distance += distance
-        
-        print(f"Total distance for {period_type} {period_value}: {total_distance:.2f} kms")
-
-    # Usage examples
-    calculate_total_distance('week', 4, 'running_data.csv')
-    calculate_total_distance('month', (2025, 1), 'running_data.csv')
-    calculate_total_distance('year', 2025, 'running_data.csv')
+    total_time = timedelta()
+    total_distance = 0.0
     
+    with open(input_file, mode='r', newline='') as file:
+        reader = csv.DictReader(file, delimiter='\t')
+        for row in reader:
+            date_str = row['date']
+            date_parts = date_str.split('-')
+            row_year = int(date_parts[0])
+            row_month = int(date_parts[1])
+            row_week = int(row['week']) if 'week' in row else None
+            row_id = int(row['id'])
+            
+            distance = float(row['distance'])
+            time_str = row['time']
+            h, m, s = map(int, time_str.split(':'))
+            duration = timedelta(hours=h, minutes=m, seconds=s)
+            
+            if run_id and row_id == run_id:
+                total_time = duration
+                total_distance = distance
+                break
+            elif period_type == 'week' and row_week == period_value:
+                total_time += duration
+                total_distance += distance
+            elif period_type == 'month' and row_year == period_value[0] and row_month == period_value[1]:
+                total_time += duration
+                total_distance += distance
+            elif period_type == 'year' and row_year == period_value:
+                total_time += duration
+                total_distance += distance
+    
+    average_pace = total_time / total_distance if total_distance > 0 else timedelta()
+    
+    total_seconds = int(average_pace.total_seconds())
+    pace_minutes, pace_seconds = divmod(total_seconds, 60)
+    
+    if run_id:
+        period_type = 'run ID'
+        period_value = run_id
+    
+    print(f"Total time for {period_type} {period_value}: {str(total_time)}")
+    print(f"Total distance for {period_type} {period_value}: {total_distance:.2f} units")
+    print(f"Average pace for {period_type} {period_value}: {pace_minutes:02}:{pace_seconds:02} per unit distance")
+
     def paintEvent(self, event):
         """Override the paintEvent to handle custom painting for the widget"""
         painter = QPainter(self)
@@ -237,6 +206,13 @@ class RunDataForm(QWidget):
             print(row)
     # print_the_whole_file()
 
-# TO-DO_1 - create calculate_average_temp... week, month, year methods
-# TO-DO_2 - create calculate_total_time... week, month, year methods - DONE
-# TO-DO_3 - create calculate_total_distance... week, month, year methods - DONE
+        # Usage examples
+calculate_metrics('week', 4, 'running_data.csv')
+print(50*'=')
+calculate_metrics('month', (2025, 1), 'running_data.csv')
+print(50*'=')
+calculate_metrics('year', 2025, 'running_data.csv')
+print(50*'=')
+calculate_metrics(None, None, 'running_data.csv', run_id=1)
+print(50*'=')
+
