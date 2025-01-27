@@ -11,13 +11,21 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("My App")
 
         widget = QComboBox()
-        widget.addItems(["One", "Two", "Three"])
+        widget.addItem("Choose metric")
+        widget.addItem("Time")
+        widget.addItem("Distance")
+        widget.addItem("Temp")
         widget.setEditable(True)
         widget.setMaxCount(10)
         widget.setInsertPolicy(QComboBox.InsertPolicy
                                .InsertAlphabetically)
         widget.currentIndexChanged.connect(self.index_changed)
         widget.currentTextChanged.connect(self.text_changed)
+
+        # Disable the "By Default" item
+        index = widget.findText("By Default")
+        widget.setItemData(index, 0, Qt.UserRole - 1)
+
         self.setCentralWidget(widget)
 
     def index_changed(self, i):  # i is an int
