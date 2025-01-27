@@ -14,6 +14,11 @@ from PyQt5.QtGui import QPixmap, QPainter
 today = str(date.today())
 input_file = 'running_data.csv'
 
+def parse_duration(time_str):
+        """Parse a duration string in the format HH:MM:SS into a timedelta object."""
+        h, m, s = map(int, time_str.split(':'))
+        return timedelta(hours=h, minutes=m, seconds=s)
+
 # Subclass QWidget to customize your application's main widget
 class RunDataForm(QWidget):
     """
@@ -141,55 +146,71 @@ class RunDataForm(QWidget):
          
         self.lineEdit_distance.clear()
         self.lineEdit_time.clear()
+
+    def calculate_metrics(period_type, period_value, input_file, run_id=None):
+        total_time = timedelta()
+        total_distance = 0.0
+        log_data = []
+
+        try:
+            with open(input_file, mode='r', newline='') as file:
+                reader = csv.DictReader(file, delimiter='\t')
+                for row in reader:
+                    try:
+                        date_str = row['date']
+                        date_parts = date_str.split('-')
+                        row_year = int(date_parts[0])
+                        row_month = int(date_parts[1])
+                        row_week = int(row['week']) if 'week' in row else None
+                        row_id = int(row['id'])
+                        
+                        distance = float(row['distance'])
+                        duration = parse_duration(row['time'])
+                        
+                        if run_id and row_id == run_id:
+                            total_time = duration
+                            total_distance = distance
+                        
+                        if period_type == 'week' and row_week == period_value:
+                            total_time += duration
+                            total_distance += distance
+                        elif period_type == 'month' and row_year == period_value[0] and row_month == period_value[1]:
+                            total_time += duration
+                            total_distance += distance
+                        elif period_type == 'year' and row_year == period_value:
+                            total_time += duration
+                            total_distance += distance
+
+                        log_data.append(row)
+                    except ValueError as e:
+                        print(f"Skipping row due to ValueError: {row} - {e}")
+                    except KeyError as e:
+                        print(f"Skipping row due to KeyError: {row} - {e}")
+                    except Exception as e:
+                        print(f"Skipping row due to unexpected error: {row} - {e}")
             
-def calculate_metrics(period_type, period_value, input_file, run_id=None):
-    """Calculate total time, total distance, and average pace for
-    a given period (week, month, year) or a specific run."""
-    
-    total_time = timedelta()
-    total_distance = 0.0
-    
-    with open(input_file, mode='r', newline='') as file:
-        reader = csv.DictReader(file, delimiter='\t')
-        for row in reader:
-            date_str = row['date']
-            date_parts = date_str.split('-')
-            row_year = int(date_parts[0])
-            row_month = int(date_parts[1])
-            row_week = int(row['week']) if 'week' in row else None
-            row_id = int(row['id'])
+            average_pace = total_time / total_distance if total_distance > 0 else timedelta()
+            total_seconds = int(average_pace.total_seconds())
+            pace_minutes, pace_seconds = divmod(total_seconds, 60)
             
-            distance = float(row['distance'])
-            time_str = row['time']
-            h, m, s = map(int, time_str.split(':'))
-            duration = timedelta(hours=h, minutes=m, seconds=s)
+            if run_id:
+                period_type = 'run ID'
+                period_value = run_id
             
-            if run_id and row_id == run_id:
-                total_time = duration
-                total_distance = distance
-                break
-            elif period_type == 'week' and row_week == period_value:
-                total_time += duration
-                total_distance += distance
-            elif period_type == 'month' and row_year == period_value[0] and row_month == period_value[1]:
-                total_time += duration
-                total_distance += distance
-            elif period_type == 'year' and row_year == period_value:
-                total_time += duration
-                total_distance += distance
-    
-    average_pace = total_time / total_distance if total_distance > 0 else timedelta()
-    
-    total_seconds = int(average_pace.total_seconds())
-    pace_minutes, pace_seconds = divmod(total_seconds, 60)
-    
-    if run_id:
-        period_type = 'run ID'
-        period_value = run_id
-    
-    print(f"Total time for {period_type} {period_value}: {str(total_time)}")
-    print(f"Total distance for {period_type} {period_value}: {total_distance:.2f} units")
-    print(f"Average pace for {period_type} {period_value}: {pace_minutes:02}:{pace_seconds:02} per unit distance")
+            print(f"Total time for {period_type} {period_value}: {str(total_time)}")
+            print(f"Total distance for {period_type} {period_value}: {total_distance:.2f} units")
+            print(f"Average pace for {period_type} {period_value}: {pace_minutes:02}:{pace_seconds:02} per unit distance")
+
+            # Write log_data to output_log.csv
+            with open('output_log.csv', mode='w', newline='') as file:
+                writer = csv.DictWriter(file, fieldnames=reader.fieldnames, delimiter='\t')
+                writer.writeheader()
+                writer.writerows(log_data)
+
+        except FileNotFoundError:
+            print(f"File {input_file} not found.")
+        except Exception as e:
+            print(f"An error occurred while processing the file: {e}")
 
     def paintEvent(self, event):
         """Override the paintEvent to handle custom painting for the widget"""
@@ -207,12 +228,12 @@ def calculate_metrics(period_type, period_value, input_file, run_id=None):
     # print_the_whole_file()
 
         # Usage examples
-calculate_metrics('week', 4, 'running_data.csv')
-print(50*'=')
-calculate_metrics('month', (2025, 1), 'running_data.csv')
-print(50*'=')
-calculate_metrics('year', 2025, 'running_data.csv')
-print(50*'=')
-calculate_metrics(None, None, 'running_data.csv', run_id=1)
-print(50*'=')
+    calculate_metrics('week', 4, 'running_data.csv')
+    print(50*'=')
+    calculate_metrics('month', (2025, 1), 'running_data.csv')
+    print(50*'=')
+    calculate_metrics('year', 2025, 'running_data.csv')
+    print(50*'=')
+    calculate_metrics(None, None, 'running_data.csv', run_id=1)
+    print(50*'=')
 
