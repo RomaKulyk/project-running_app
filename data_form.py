@@ -151,6 +151,7 @@ class RunDataForm(QWidget):
         total_time = timedelta()
         total_distance = 0.0
         log_data = []
+        time_str = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
 
         try:
             with open(input_file, mode='r', newline='') as file:
@@ -197,15 +198,21 @@ class RunDataForm(QWidget):
                 period_type = 'run ID'
                 period_value = run_id
             
-            print(f"Total time for {period_type} {period_value}: {str(total_time)}")
-            print(f"Total distance for {period_type} {period_value}: {total_distance:.2f} units")
-            print(f"Average pace for {period_type} {period_value}: {pace_minutes:02}:{pace_seconds:02} per unit distance")
+            data_to_log = [
+                ('='*50),
+                (time_str),
+                (f"Total time for {period_type} {period_value}: {str(total_time)}"),
+                (f"Total distance for {period_type} {period_value}: {total_distance:.2f} km"),
+                (f"Average pace for {period_type} {period_value}: {pace_minutes:02}:{pace_seconds:02} per km"),
+                ("\n")
+                ]
+            for data in data_to_log:
+                print(data)
 
             # Write log_data to output_log.csv
-            with open('output_log.csv', mode='w', newline='') as file:
-                writer = csv.DictWriter(file, fieldnames=reader.fieldnames, delimiter='\t')
-                writer.writeheader()
-                writer.writerows(log_data)
+            data_to_log_str = "\n".join(data_to_log)
+            with open('result.txt', 'a') as file:
+                 file.write(data_to_log_str)
 
         except FileNotFoundError:
             print(f"File {input_file} not found.")
@@ -227,13 +234,8 @@ class RunDataForm(QWidget):
             print(row)
     # print_the_whole_file()
 
-        # Usage examples
-    calculate_metrics('week', 4, 'running_data.csv')
-    print(50*'=')
+    # Usage examples
+    calculate_metrics('week', 5, 'running_data.csv')
     calculate_metrics('month', (2025, 1), 'running_data.csv')
-    print(50*'=')
     calculate_metrics('year', 2025, 'running_data.csv')
-    print(50*'=')
     calculate_metrics(None, None, 'running_data.csv', run_id=1)
-    print(50*'=')
-
