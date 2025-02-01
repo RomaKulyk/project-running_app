@@ -64,7 +64,6 @@ class RunDataForm(QWidget):
         self.lineEdit_time.setPlaceholderText('Please enter time: HH:MM:SS')
         # Set the maximum number of characters which can be entered to 8
         self.lineEdit_time.setMaxLength(8)
-
         layout.addWidget(label_time, 1, 0)
         layout.addWidget(self.lineEdit_time, 1, 1)
 
@@ -74,17 +73,17 @@ class RunDataForm(QWidget):
         layout.setRowMinimumHeight(2, 75)
 
         button_upload = QPushButton('Calculate total time')
-        button_upload.clicked.connect(self.input_data)
+        # button_upload.clicked.connect(self.input_data) - S/B UPDATED
         layout.addWidget(button_upload, 3, 0, 1, 2)
         layout.setRowMinimumHeight(2, 75)
          
         button_upload = QPushButton('Calculate total distance')
-        button_upload.clicked.connect(self.input_data)
+        # button_upload.clicked.connect(self.input_data) - S/B UPDATED
         layout.addWidget(button_upload, 4, 0, 1, 2)
         layout.setRowMinimumHeight(2, 75)
         
-        button_upload = QPushButton('Calculate averate temp')
-        button_upload.clicked.connect(self.input_data)
+        button_upload = QPushButton('Calculate average temp')
+        # button_upload.clicked.connect(self.input_data) - S/B UPDATED
         layout.addWidget(button_upload, 5, 0, 1, 2)
         layout.setRowMinimumHeight(2, 75)
 
@@ -239,3 +238,8 @@ class RunDataForm(QWidget):
     calculate_metrics('month', (2025, 1), 'running_data.csv')
     calculate_metrics('year', 2025, 'running_data.csv')
     calculate_metrics(None, None, 'running_data.csv', run_id=1)
+
+# TO-D0_1 - Limit the result.txt file to store only data with request for only
+# current month.
+# TO-D0_2 - assign proper action to the 'Calculate total time', 'Calculate total
+# distance', and 'Calculate average temp' buttons.
