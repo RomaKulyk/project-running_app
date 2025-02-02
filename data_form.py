@@ -72,21 +72,51 @@ class RunDataForm(QWidget):
         layout.addWidget(button_upload, 2, 0, 1, 2)
         layout.setRowMinimumHeight(2, 75)
 
+        label_total_time = QLabel('<font size="4"> Total Time  </font>')
+        self.lineEdit_total_time  = QLineEdit()
+        self.lineEdit_total_time .setPlaceholderText(
+            'period_type, period_value, run_id=None')
+        # Set the maximum number of characters which can be entered to 21
+        self.lineEdit_total_time .setMaxLength(21)
+        layout.addWidget(label_total_time , 3, 0)
+        layout.addWidget(self.lineEdit_total_time , 3, 1)
+
         button_upload = QPushButton('Calculate total time')
-        # button_upload.clicked.connect(self.input_data) - S/B UPDATED
-        layout.addWidget(button_upload, 3, 0, 1, 2)
-        layout.setRowMinimumHeight(2, 75)
-         
-        button_upload = QPushButton('Calculate total distance')
-        # button_upload.clicked.connect(self.input_data) - S/B UPDATED
+        button_upload.clicked.connect(self.calculate_metrics)  # - S/B UPDATED
+        button_upload.clicked.connect(self.print_data)
         layout.addWidget(button_upload, 4, 0, 1, 2)
         layout.setRowMinimumHeight(2, 75)
-        
-        button_upload = QPushButton('Calculate average temp')
-        # button_upload.clicked.connect(self.input_data) - S/B UPDATED
-        layout.addWidget(button_upload, 5, 0, 1, 2)
+  
+        label_total_distance = QLabel('<font size="4"> Total Distance  </font>')
+        self.lineEdit_total_distance  = QLineEdit()
+        self.lineEdit_total_distance.setPlaceholderText(
+            'period_type, period_value, run_id=None')
+        # Set the maximum number of characters which can be entered to 21
+        self.lineEdit_total_time .setMaxLength(21)
+        layout.addWidget(label_total_distance , 5, 0)
+        layout.addWidget(self.lineEdit_total_distance , 5, 1)
+
+        button_upload = QPushButton('Calculate total distance')
+        button_upload.clicked.connect(self.calculate_metrics)  # - S/B UPDATED
+        button_upload.clicked.connect(self.print_data)
+        layout.addWidget(button_upload, 6, 0, 1, 2)
         layout.setRowMinimumHeight(2, 75)
 
+        label_total_temp = QLabel('<font size="4"> Total Temp  </font>')
+        self.lineEdit_total_temp  = QLineEdit()
+        self.lineEdit_total_temp.setPlaceholderText(
+            'period_type, period_value, run_id=None')
+        # Set the maximum number of characters which can be entered to 21
+        self.lineEdit_total_temp .setMaxLength(21)
+        layout.addWidget(label_total_temp , 7, 0)
+        layout.addWidget(self.lineEdit_total_temp , 7, 1)
+      
+        button_upload = QPushButton('Calculate average temp')
+        button_upload.clicked.connect(self.calculate_metrics)  # - S/B UPDATED
+        button_upload.clicked.connect(self.print_data)
+        layout.addWidget(button_upload, 8, 0, 1, 2)
+        layout.setRowMinimumHeight(2, 75)
+      
         self.setLayout(layout)
 
     def get_week_number(self):
@@ -146,7 +176,7 @@ class RunDataForm(QWidget):
         self.lineEdit_distance.clear()
         self.lineEdit_time.clear()
 
-    def calculate_metrics(period_type, period_value, input_file, run_id=None):
+    def calculate_metrics(period_type, period_value, input_file='running_data.csv', run_id=None):
         total_time = timedelta()
         total_distance = 0.0
         log_data = []
@@ -207,7 +237,7 @@ class RunDataForm(QWidget):
                 ]
             for data in data_to_log:
                 print(data)
-
+        
             # Write log_data to output_log.csv
             data_to_log_str = "\n".join(data_to_log)
             with open('result.txt', 'a') as file:
@@ -217,6 +247,13 @@ class RunDataForm(QWidget):
             print(f"File {input_file} not found.")
         except Exception as e:
             print(f"An error occurred while processing the file: {e}")
+            
+        
+    def print_data(data_to_log):
+        """This method prints data to terminal"""
+        print("Hello from terminal!")
+        print(data_to_log)
+        print(type(data_to_log))
 
     def paintEvent(self, event):
         """Override the paintEvent to handle custom painting for the widget"""
@@ -234,10 +271,10 @@ class RunDataForm(QWidget):
     # print_the_whole_file()
 
     # Usage examples
-    calculate_metrics('week', 5, 'running_data.csv')
-    calculate_metrics('month', (2025, 1), 'running_data.csv')
-    calculate_metrics('year', 2025, 'running_data.csv')
-    calculate_metrics(None, None, 'running_data.csv', run_id=1)
+    calculate_metrics('week', 5)
+    calculate_metrics('month', (2025, 2))
+    calculate_metrics('year', 2025,)
+    calculate_metrics(None, None, run_id=53)
 
 # TO-D0_1 - Limit the result.txt file to store only data with request for only
 # current month.
