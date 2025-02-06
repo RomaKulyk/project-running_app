@@ -81,10 +81,10 @@ class RunDataForm(QWidget):
         layout.addWidget(label_total_time , 3, 0)
         layout.addWidget(self.lineEdit_total_time , 3, 1)
 
-        button_upload = QPushButton('Calculate total time')
-        button_upload.clicked.connect(self.calculate_metrics)  # - S/B UPDATED
-        button_upload.clicked.connect(self.print_data)
-        layout.addWidget(button_upload, 4, 0, 1, 2)
+        button_upload_tt = QPushButton('Calculate total time')
+        button_upload_tt.clicked.connect(self.calculate_metrics)  # - S/B UPDATED
+        button_upload_tt.clicked.connect(self.print_data)
+        layout.addWidget(button_upload_tt, 4, 0, 1, 2)
         layout.setRowMinimumHeight(2, 75)
   
         label_total_distance = QLabel('<font size="4"> Total Distance  </font>')
@@ -96,10 +96,10 @@ class RunDataForm(QWidget):
         layout.addWidget(label_total_distance , 5, 0)
         layout.addWidget(self.lineEdit_total_distance , 5, 1)
 
-        button_upload = QPushButton('Calculate total distance')
-        button_upload.clicked.connect(self.calculate_metrics)  # - S/B UPDATED
-        button_upload.clicked.connect(self.print_data)
-        layout.addWidget(button_upload, 6, 0, 1, 2)
+        button_upload_td = QPushButton('Calculate total distance')
+        button_upload_td.clicked.connect(self.calculate_metrics)  # - S/B UPDATED
+        button_upload_td.clicked.connect(self.print_data)
+        layout.addWidget(button_upload_td, 6, 0, 1, 2)
         layout.setRowMinimumHeight(2, 75)
 
         label_total_temp = QLabel('<font size="4"> Total Temp  </font>')
@@ -111,10 +111,10 @@ class RunDataForm(QWidget):
         layout.addWidget(label_total_temp , 7, 0)
         layout.addWidget(self.lineEdit_total_temp , 7, 1)
       
-        button_upload = QPushButton('Calculate average temp')
-        button_upload.clicked.connect(self.calculate_metrics)  # - S/B UPDATED
-        button_upload.clicked.connect(self.print_data)
-        layout.addWidget(button_upload, 8, 0, 1, 2)
+        button_upload_at = QPushButton('Calculate average temp')
+        button_upload_at.clicked.connect(self.calculate_metrics)  # - S/B UPDATED
+        button_upload_at.clicked.connect(self.print_data)
+        layout.addWidget(button_upload_at, 8, 0, 1, 2)
         layout.setRowMinimumHeight(2, 75)
       
         self.setLayout(layout)
@@ -271,12 +271,10 @@ class RunDataForm(QWidget):
     # print_the_whole_file()
 
     # Usage examples
-    calculate_metrics('week', 5)
+    calculate_metrics('week', 6)
     calculate_metrics('month', (2025, 2))
     calculate_metrics('year', 2025,)
-    calculate_metrics(None, None, run_id=53)
+    calculate_metrics(None, None, run_id=13)
 
-# TO-D0_1 - Limit the result.txt file to store only data with request for only
-# current month.
-# TO-D0_2 - assign proper action to the 'Calculate total time', 'Calculate total
+# TO-D0_1 - assign proper action to the 'Calculate total time', 'Calculate total
 # distance', and 'Calculate average temp' buttons.
