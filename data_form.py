@@ -229,19 +229,24 @@ class RunDataForm(QWidget):
             
             data_to_log = [
                 ('='*50),
+                ("\n"),
                 (time_str),
+                ("\n"),
                 (f"Total time for {period_type} {period_value}: {str(total_time)}"),
+                ("\n"),
                 (f"Total distance for {period_type} {period_value}: {total_distance:.2f} km"),
+                ("\n"),
                 (f"Average pace for {period_type} {period_value}: {pace_minutes:02}:{pace_seconds:02} per km"),
                 ("\n")
                 ]
             for data in data_to_log:
-                print(data)
+                print(data, end='')
         
             # Write log_data to output_log.csv
-            data_to_log_str = "\n".join(data_to_log)
+            # data_to_log_str = "\n".join(data_to_log)
             with open('result.txt', 'a') as file:
-                 file.write(data_to_log_str)
+                 # file.write(data_to_log_str)
+                 file.writelines(data_to_log)
 
         except FileNotFoundError:
             print(f"File {input_file} not found.")

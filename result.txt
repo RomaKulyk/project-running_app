@@ -40,3 +40,109 @@ Total time for <data_form.RunDataForm object at 0x000002051A132DE0> False: 0:00:
 Total distance for <data_form.RunDataForm object at 0x000002051A132DE0> False: 0.00 km
 Average pace for <data_form.RunDataForm object at 0x000002051A132DE0> False: 00:00 per km
 
+==================================================
+2025-02-06 07:18:54
+Total time for week 6: 18:32:18
+Total distance for week 6: 86.58 km
+Average pace for week 6: 12:50 per km
+
+==================================================
+2025-02-06 07:18:54
+Total time for month (2025, 2): 18:32:18
+Total distance for month (2025, 2): 86.58 km
+Average pace for month (2025, 2): 12:50 per km
+
+==================================================
+2025-02-06 07:18:54
+Total time for year 2025: 18:32:18
+Total distance for year 2025: 86.58 km
+Average pace for year 2025: 12:50 per km
+
+==================================================
+2025-02-06 07:18:54
+Total time for run ID 13: 0:44:44
+Total distance for run ID 13: 4.44 km
+Average pace for run ID 13: 10:04 per km
+
+==================================================
+2025-02-06 07:19:42
+Total time for <data_form.RunDataForm object at 0x0000022538032DE0> False: 0:00:00
+Total distance for <data_form.RunDataForm object at 0x0000022538032DE0> False: 0.00 km
+Average pace for <data_form.RunDataForm object at 0x0000022538032DE0> False: 00:00 per km
+
+==================================================
+2025-02-06 07:19:50
+Total time for <data_form.RunDataForm object at 0x0000022538032DE0> False: 0:00:00
+Total distance for <data_form.RunDataForm object at 0x0000022538032DE0> False: 0.00 km
+Average pace for <data_form.RunDataForm object at 0x0000022538032DE0> False: 00:00 per km
+
+==================================================
+2025-02-06 07:19:55
+Total time for <data_form.RunDataForm object at 0x0000022538032DE0> False: 0:00:00
+Total distance for <data_form.RunDataForm object at 0x0000022538032DE0> False: 0.00 km
+Average pace for <data_form.RunDataForm object at 0x0000022538032DE0> False: 00:00 per km
+
+==================================================2025-02-06 07:22:13Total time for week 6: 20:12:57Total distance for week 6: 96.57 kmAverage pace for week 6: 12:33 per km
+==================================================2025-02-06 07:22:13Total time for month (2025, 2): 20:12:57Total distance for month (2025, 2): 96.57 kmAverage pace for month (2025, 2): 12:33 per km
+==================================================2025-02-06 07:22:13Total time for year 2025: 20:12:57Total distance for year 2025: 96.57 kmAverage pace for year 2025: 12:33 per km
+==================================================2025-02-06 07:22:13Total time for run ID 13: 0:44:44Total distance for run ID 13: 4.44 kmAverage pace for run ID 13: 10:04 per km
+==================================================
+2025-02-06 07:23:18
+Total time for week 6: 20:12:57
+Total distance for week 6: 96.57 km
+Average pace for week 6: 12:33 per km
+==================================================
+2025-02-06 07:23:18
+Total time for month (2025, 2): 20:12:57
+Total distance for month (2025, 2): 96.57 km
+Average pace for month (2025, 2): 12:33 per km
+==================================================
+2025-02-06 07:23:18
+Total time for year 2025: 20:12:57
+Total distance for year 2025: 96.57 km
+Average pace for year 2025: 12:33 per km
+==================================================
+2025-02-06 07:23:18
+Total time for run ID 13: 0:44:44
+Total distance for run ID 13: 4.44 km
+Average pace for run ID 13: 10:04 per km
+==================================================
+2025-02-06 07:23:43
+Total time for week 6: 20:12:57
+Total distance for week 6: 96.57 km
+Average pace for week 6: 12:33 per km
+==================================================
+2025-02-06 07:23:43
+Total time for month (2025, 2): 20:12:57
+Total distance for month (2025, 2): 96.57 km
+Average pace for month (2025, 2): 12:33 per km
+==================================================
+2025-02-06 07:23:43
+Total time for year 2025: 20:12:57
+Total distance for year 2025: 96.57 km
+Average pace for year 2025: 12:33 per km
+==================================================
+2025-02-06 07:23:43
+Total time for run ID 13: 0:44:44
+Total distance for run ID 13: 4.44 km
+Average pace for run ID 13: 10:04 per km
+==================================================
+2025-02-06 07:25:26
+Total time for week 6: 20:12:57
+Total distance for week 6: 96.57 km
+Average pace for week 6: 12:33 per km
+==================================================
+2025-02-06 07:25:26
+Total time for month (2025, 2): 20:12:57
+Total distance for month (2025, 2): 96.57 km
+Average pace for month (2025, 2): 12:33 per km
+==================================================
+2025-02-06 07:25:26
+Total time for year 2025: 20:12:57
+Total distance for year 2025: 96.57 km
+Average pace for year 2025: 12:33 per km
+==================================================
+2025-02-06 07:25:26
+Total time for run ID 13: 0:44:44
+Total distance for run ID 13: 4.44 km
+Average pace for run ID 13: 10:04 per km
