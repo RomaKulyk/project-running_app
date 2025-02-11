@@ -53,3 +53,63 @@ Average pace for year 2025: 00:00 per km
 Total time for run ID 13: 0:00:00
 Total distance for run ID 13: 0.00 km
 Average pace for run ID 13: 00:00 per km
+==================================================
+2025-02-11 14:33:28
+Total time for week 6: 0:00:00
+Total distance for week 6: 0.00 km
+Average pace for week 6: 00:00 per km
+==================================================
+2025-02-11 14:33:28
+Total time for month (2025, 2): 0:00:00
+Total distance for month (2025, 2): 0.00 km
+Average pace for month (2025, 2): 00:00 per km
+==================================================
+2025-02-11 14:33:28
+Total time for year 2025: 0:00:00
+Total distance for year 2025: 0.00 km
+Average pace for year 2025: 00:00 per km
+==================================================
+2025-02-11 14:33:28
+Total time for run ID 13: 0:00:00
+Total distance for run ID 13: 0.00 km
+Average pace for run ID 13: 00:00 per km
+==================================================
+2025-02-11 14:35:37
+Total time for week 6: 0:00:00
+Total distance for week 6: 0.00 km
+Average pace for week 6: 00:00 per km
+==================================================
+2025-02-11 14:35:37
+Total time for month (2025, 2): 0:00:00
+Total distance for month (2025, 2): 0.00 km
+Average pace for month (2025, 2): 00:00 per km
+==================================================
+2025-02-11 14:35:37
+Total time for year 2025: 0:00:00
+Total distance for year 2025: 0.00 km
+Average pace for year 2025: 00:00 per km
+==================================================
+2025-02-11 14:35:37
+Total time for run ID 13: 0:00:00
+Total distance for run ID 13: 0.00 km
+Average pace for run ID 13: 00:00 per km
+==================================================
+2025-02-11 14:37:34
+Total time for week 6: 0:00:00
+Total distance for week 6: 0.00 km
+Average pace for week 6: 00:00 per km
+==================================================
+2025-02-11 14:37:34
+Total time for month (2025, 2): 0:00:00
+Total distance for month (2025, 2): 0.00 km
+Average pace for month (2025, 2): 00:00 per km
+==================================================
+2025-02-11 14:37:34
+Total time for year 2025: 0:00:00
+Total distance for year 2025: 0.00 km
+Average pace for year 2025: 00:00 per km
+==================================================
+2025-02-11 14:37:34
+Total time for run ID 13: 0:00:00
+Total distance for run ID 13: 0.00 km
+Average pace for run ID 13: 00:00 per km
