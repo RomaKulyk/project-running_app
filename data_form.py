@@ -76,19 +76,19 @@ class RunDataForm(QWidget):
         layout.addWidget(button_upload, 2, 0, 1, 2)
         layout.setRowMinimumHeight(2, 75)
 
-        button_upload = QPushButton('Calculate total time')
-        button_upload.clicked.connect(self.input_data)
-        layout.addWidget(button_upload, 3, 0, 1, 2)
+        button_upload_tt = QPushButton('Calculate total time')
+        button_upload_tt.clicked.connect(self.input_data)
+        layout.addWidget(button_upload_tt, 3, 0, 1, 2)
         layout.setRowMinimumHeight(2, 75)
          
-        button_upload = QPushButton('Calculate total distance')
-        button_upload.clicked.connect(self.input_data)
-        layout.addWidget(button_upload, 4, 0, 1, 2)
+        button_upload_td = QPushButton('Calculate total distance')
+        button_upload_td.clicked.connect(self.input_data)
+        layout.addWidget(button_upload_td, 4, 0, 1, 2)
         layout.setRowMinimumHeight(2, 75)
         
-        button_upload = QPushButton('Calculate averate temp')
-        button_upload.clicked.connect(self.input_data)
-        layout.addWidget(button_upload, 5, 0, 1, 2)
+        button_upload_at = QPushButton('Calculate averate temp')
+        button_upload_at.clicked.connect(self.input_data)
+        layout.addWidget(button_upload_at, 5, 0, 1, 2)
         layout.setRowMinimumHeight(2, 75)
 
         self.setLayout(layout)
