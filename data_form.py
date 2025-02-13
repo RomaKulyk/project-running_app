@@ -7,12 +7,14 @@ from PyQt5.QtWidgets import (QWidget,
                              QPushButton,
                              QLabel,
                              QLineEdit,
-                             QGridLayout,)
+                             QGridLayout,
+                             QTextEdit)
 from PyQt5.QtGui import QPixmap, QPainter
 
 
 today = str(date.today())
 input_file = 'running_data.csv'
+text = ""
 
 # Subclass QWidget to customize your application's main widget
 class RunDataForm(QWidget):
@@ -50,6 +52,7 @@ class RunDataForm(QWidget):
         self.resize(325, 475)
         self.setMinimumHeight(300)
         self.setMinimumWidth(250)
+       
 
         layout = QGridLayout()
 
@@ -90,9 +93,20 @@ class RunDataForm(QWidget):
         button_upload_at.clicked.connect(lambda: self.calculate_average_temp('year', 2025))
         layout.addWidget(button_upload_at, 5, 0, 1, 2)
         layout.setRowMinimumHeight(2, 75)
+        
+        text_edit = QTextEdit()
+        text_edit.setReadOnly(True)
+        text_edit.setPlainText(text)
+        text_edit.setMaximumHeight(40)
+        
+        ok_button = QPushButton("OK")
+        ok_button.clicked.connect(text_edit.clear)
+        
+        layout.addWidget(text_edit, 6, 0, 1, 2)
+        layout.addWidget(ok_button)
 
         self.setLayout(layout)
-
+    
     def get_week_number(self):
         """This method allows to get week's number"""
         today = datetime.date.today()
@@ -150,7 +164,7 @@ class RunDataForm(QWidget):
         self.lineEdit_distance.clear()
         self.lineEdit_time.clear()
 
-    def calculate_total_time(self, period_type, period_value):
+    def calculate_total_time(self, period_type, period_value)->str:
         """This method calculates total time for a given period
         (week, month, year)"""
 
@@ -182,9 +196,11 @@ class RunDataForm(QWidget):
         total_minutes, total_seconds = divmod(remainder, 60)
         total_time = f"{total_hours:02}:{total_minutes:02}:{total_seconds:02}"
 
-        print(f"Total time for {period_type} {period_value} is:", total_time)
-        
-    def calculate_total_distance(self, period_type, period_value):
+        result = f"Total time for {period_type} {period_value} is: {total_time}" 
+        print(result)
+        return result
+               
+    def calculate_total_distance(self, period_type, period_value) -> str:
         """This method calculates total distance for a given period
         (week, month, year)
         """
@@ -206,10 +222,12 @@ class RunDataForm(QWidget):
                     total_distance += distance
                 elif period_type == 'year' and row_year == period_value:
                     total_distance += distance
-        
-        print(f"Total distance for {period_type} {period_value}: {total_distance:.2f} kms")
+
+        result = f"Total distance for {period_type} {period_value}: {total_distance:.2f} kms"
+        print(result)
+        return result
     
-    def calculate_average_temp(self, period_type, period_value):
+    def calculate_average_temp(self, period_type, period_value)->str:
         """This method calculates the average temp (time per km) for a given period (week, month, year)"""
         total_time = timedelta()
         total_distance = 0.0
@@ -246,8 +264,10 @@ class RunDataForm(QWidget):
             average_temp = f"{int(average_minutes):02}:{int(average_seconds):02}"
         else:
             average_temp = "00:00"
-        
-        print(f"Average temp for {period_type} {period_value} is: {average_temp} per km")
+
+        result = f"Average temp for {period_type} {period_value} is: {average_temp} per km"
+        print(result)
+        return result
         
     def paintEvent(self, event):
         """Override the paintEvent to handle custom painting for the widget"""
@@ -262,4 +282,5 @@ class RunDataForm(QWidget):
                 data_list.append(row)
         for row in data_list:
             print(row)
+
 
