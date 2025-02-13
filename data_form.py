@@ -77,17 +77,17 @@ class RunDataForm(QWidget):
         layout.setRowMinimumHeight(2, 75)
 
         button_upload_tt = QPushButton('Calculate total time')
-        button_upload_tt.clicked.connect(self.input_data)
+        button_upload_tt.clicked.connect(self.print_the_whole_file)
         layout.addWidget(button_upload_tt, 3, 0, 1, 2)
         layout.setRowMinimumHeight(2, 75)
          
         button_upload_td = QPushButton('Calculate total distance')
-        button_upload_td.clicked.connect(self.input_data)
+        button_upload_td.clicked.connect(self.print_the_whole_file)
         layout.addWidget(button_upload_td, 4, 0, 1, 2)
         layout.setRowMinimumHeight(2, 75)
         
         button_upload_at = QPushButton('Calculate averate temp')
-        button_upload_at.clicked.connect(self.input_data)
+        button_upload_at.clicked.connect(self.print_the_whole_file)
         layout.addWidget(button_upload_at, 5, 0, 1, 2)
         layout.setRowMinimumHeight(2, 75)
 
@@ -149,11 +149,6 @@ class RunDataForm(QWidget):
          
         self.lineEdit_distance.clear()
         self.lineEdit_time.clear()
-            
-    def calculate_average_temp(self):
-        """This method calculates average temp for a given period
-        (week, month, year)"""
-        pass
 
     def calculate_total_time(period_type, period_value, input_file):
         """This method calculates total time for a given period
@@ -188,8 +183,9 @@ class RunDataForm(QWidget):
         total_time = f"{total_hours:02}:{total_minutes:02}:{total_seconds:02}"
 
         print(f"Total time for {period_type} {period_value} is:", total_time)
-    calculate_total_time('week', 4, 'running_data.csv')
-    calculate_total_time('month', (2025, 1), 'running_data.csv')
+    # Usage examples
+    calculate_total_time('week', 7, 'running_data.csv')
+    calculate_total_time('month', (2025, 2), 'running_data.csv')
     calculate_total_time('year', 2025, 'running_data.csv')
 
     def calculate_total_distance(period_type, period_value, input_file):
@@ -216,18 +212,61 @@ class RunDataForm(QWidget):
                     total_distance += distance
         
         print(f"Total distance for {period_type} {period_value}: {total_distance:.2f} kms")
-
     # Usage examples
-    calculate_total_distance('week', 4, 'running_data.csv')
-    calculate_total_distance('month', (2025, 1), 'running_data.csv')
-    calculate_total_distance('year', 2025, 'running_data.csv')
+    calculate_total_distance('week', 7, 'running_data.csv')
+    calculate_total_distance('month', (2025, 2), 'running_data.csv')
+    calculate_total_distance('year', 2025, 'running_data.csv')   
+
+    def calculate_average_temp(period_type, period_value, input_file):
+        """This method calculates the average temp (time per km) for a given period (week, month, year)"""
+        total_time = timedelta()
+        total_distance = 0.0
+    
+        with open(input_file, mode='r', newline='') as file:
+            reader = csv.DictReader(file, delimiter='\t')
+            for row in reader:
+                date_str = row['date']
+                date_parts = date_str.split('-')
+                row_year = int(date_parts[0])
+                row_month = int(date_parts[1])
+                row_week = int(row['week']) if 'week' in row else None
+                
+                time_str = row['time']
+                h, m, s = map(int, time_str.split(':'))
+                duration = timedelta(hours=h, minutes=m, seconds=s)
+                
+                distance = float(row['distance'])
+                
+                if period_type == 'week' and row_week == period_value:
+                    total_time += duration
+                    total_distance += distance
+                elif period_type == 'month' and row_year == period_value[0] and row_month == period_value[1]:
+                    total_time += duration
+                    total_distance += distance
+                elif period_type == 'year' and row_year == period_value:
+                    total_time += duration
+                    total_distance += distance
+
+        if total_distance > 0:
+            total_seconds = int(total_time.total_seconds())
+            average_temp_seconds = total_seconds / total_distance
+            average_minutes, average_seconds = divmod(average_temp_seconds, 60)
+            average_temp = f"{int(average_minutes):02}:{int(average_seconds):02}"
+        else:
+            average_temp = "00:00"
+        
+        print(f"Average temp for {period_type} {period_value} is: {average_temp} per km")
+    # Usage examples
+    calculate_average_temp('week', 7, 'running_data.csv')
+    calculate_average_temp('month', (2025, 2), 'running_data.csv')
+    calculate_average_temp('year', 2025, 'running_data.csv')
     
     def paintEvent(self, event):
         """Override the paintEvent to handle custom painting for the widget"""
         painter = QPainter(self)
         painter.drawPixmap(self.rect(), self.image)
 
-    def print_the_whole_file():
+    def print_the_whole_file(self):
         with open(input_file, mode='r', newline='') as file:
             reader = csv.DictReader(file, delimiter='\t')
             data_list = []
@@ -235,7 +274,6 @@ class RunDataForm(QWidget):
                 data_list.append(row)
         for row in data_list:
             print(row)
-    # print_the_whole_file()
 
 # TO-DO_1 - create calculate_average_temp... week, month, year methods
 # TO-DO_2 - create calculate_total_time... week, month, year methods - DONE
