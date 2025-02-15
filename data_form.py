@@ -26,10 +26,17 @@ class RunDataForm(QWidget):
         This method input data to the input_file in the following format:
         week number, distance and time
 
-    calculate_average_temp
-        This method calculates average temp for a given period
-        (week, month, year)
-    
+    calculate_total_time_from_input
+        Extracts data from lineEdit_total_time and calls calculate_total_time
+
+    calculate_total_distance_from_input
+        Extracts data from lineEdit_total_distance and calls 
+        calculate_total_distance
+
+    calculate_average_temp_from_input
+        Extracts data from lineEdit_average_temp and calls 
+        calculate_average_temp
+
     calculate_total_time
         This method calculates total time for a given period
         (week, month, year)
@@ -37,6 +44,16 @@ class RunDataForm(QWidget):
     calculate_total_distance
         This method calculates total distance for a given period
         (week, month, year)
+
+    calculate_average_temp
+        This method calculates average temp for a given period
+        (week, month, year)
+    
+    paintEvent
+        Override the paintEvent to handle custom painting for the widget
+
+    print_the_whole_file
+        This method prints the entire content of the input file
     """
 
     def __init__(self):
@@ -50,7 +67,8 @@ class RunDataForm(QWidget):
         self.setMinimumHeight(300)
         self.setMinimumWidth(250)
 
-        text = "You will see your results here SOON!"
+        text = "You will see your results here SOON!"\
+            "\nperiod type, period value\nweek, 7\nmonth, 2025-02\nyear, 2025"
        
         layout = QGridLayout()
 
@@ -235,7 +253,6 @@ class RunDataForm(QWidget):
             self.text_edit.setPlainText("Invalid input format."
                                 " Please enter 'period type, period value'.")
 
-
     def calculate_total_time(self, period_type, period_value):
         """This method calculates total time for a given period 
            (week, month, year)"""
@@ -353,7 +370,7 @@ class RunDataForm(QWidget):
                 average_minutes, average_seconds = divmod(
                     average_temp_seconds, 60)
                 average_temp = (f"{int(average_minutes):02}:"
-                                f" {int(average_seconds):02}")
+                                f"{int(average_seconds):02}")
             else:
                 average_temp = "00:00"
 
@@ -372,6 +389,7 @@ class RunDataForm(QWidget):
         painter.drawPixmap(self.rect(), self.image)
 
     def print_the_whole_file(self):
+        """This method prints the entire content of the input file"""
         with open(input_file, mode='r', newline='') as file:
             reader = csv.DictReader(file, delimiter='\t')
             data_list = []
