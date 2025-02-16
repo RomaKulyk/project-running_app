@@ -19,11 +19,13 @@ class LoginForm(QWidget):
         This is a method to check if user has a permission to use app
     open_run_data_form
         This is a method which opens another window after authorisation
+    paine_event
+        Override the paint_event to handle custom painting for the widget
     """
     def __init__(self):
         super().__init__()
-        # Load image 
-        self.image = QPixmap("image_1.png")
+        # Load image
+        self.image = QPixmap("image_3_running_man.jpg")
         # Set window title
         self.setWindowTitle('Running App')
         # Set window sizes
@@ -61,7 +63,7 @@ class LoginForm(QWidget):
         msg = QMessageBox()
 
         if self.lineEdit_username.text() == 'R2D2'\
-        and self.lineEdit_password.text() == '1234':
+                and self.lineEdit_password.text() == '1234':
             # It opens the second app's window if password and login is correct
             self.open_run_data_form()
             # It closes login window
@@ -77,9 +79,10 @@ class LoginForm(QWidget):
         self.secondWindow.show()
 
     def paintEvent(self, event):
-        """Override the paintEvent to handle custom painting for the widget"""
-        painter = QPainter(self) 
+        """Override the paint_event to handle custom painting for the widget"""
+        painter = QPainter(self)
         painter.drawPixmap(self.rect(), self.image)
+
 
 if __name__ == '__main__':
     # Create an instance of QApplication
