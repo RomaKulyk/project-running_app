@@ -299,6 +299,7 @@ class RunDataForm(QWidget):
                       f" {total_time_str}")
             print(result)
             self.text_edit.setPlainText(result)
+            self.lineEdit_total_time.clear()
         except FileNotFoundError:
             print(f"File {input_file} not found.")
         except Exception as e:
@@ -333,6 +334,7 @@ class RunDataForm(QWidget):
                       f" {total_distance:.2f} kms")
             print(result)
             self.text_edit.setPlainText(result)
+            self.lineEdit_total_distance.clear()
         except FileNotFoundError:
             print(f"File {input_file} not found.")
         except Exception as e:
@@ -386,6 +388,7 @@ class RunDataForm(QWidget):
                       f" {average_temp} per km")
             print(result)
             self.text_edit.setPlainText(result)
+            self.lineEdit_average_temp.clear()
         except FileNotFoundError:
             print(f"File {input_file} not found.")
         except Exception as e:
