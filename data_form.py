@@ -134,7 +134,7 @@ class RunDataForm(QWidget):
 
         self.text_edit = QTextEdit()
         self.text_edit.setReadOnly(True)
-        self.text_edit.setPlainText(text)
+        self.text_edit.setPlaceholderText(text)
         self.text_edit.setMaximumHeight(100)
 
         ok_button = QPushButton("OK")
