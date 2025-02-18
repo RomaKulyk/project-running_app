@@ -35,13 +35,15 @@ class LoginForm(QWidget):
 
         layout = QGridLayout()
 
-        label_name = QLabel('<font size="4"> Username </font>')
+        label_name = QLabel(
+            '<font size="4" color="white"><b> Username </b></font>')
         self.lineEdit_username = QLineEdit()
         self.lineEdit_username.setPlaceholderText('Please enter your username')
         layout.addWidget(label_name, 0, 0)
         layout.addWidget(self.lineEdit_username, 0, 1)
 
-        label_password = QLabel('<font size="4"> Password </font>')
+        label_password = QLabel(
+            '<font size="4" color="white"><b> Password </b></font>')
         self.lineEdit_password = QLineEdit()
         self.lineEdit_password.setPlaceholderText('Please enter your password')
         # Hide the characters entered by user
