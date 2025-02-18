@@ -64,7 +64,7 @@ class RunDataForm(QWidget):
         # Set window title
         self.setWindowTitle('Running App')
         # Set window sizes
-        self.resize(325, 475)
+        self.resize(360, 475)
         self.setMinimumHeight(300)
         self.setMinimumWidth(250)
 
@@ -73,28 +73,32 @@ class RunDataForm(QWidget):
 
         layout = QGridLayout()
 
-        label_distance = QLabel('<font size="4"> Distance </font>')
+        label_distance = QLabel(
+            '<font size="4"><b> Distance </b></font>')
         self.lineEdit_distance = QLineEdit()
         self.lineEdit_distance.setPlaceholderText(
             'Please enter distance: KM:MM')
         self.lineEdit_distance.setMaxLength(5)
         layout.addWidget(label_distance, 0, 0)
+        self.lineEdit_distance.setMinimumWidth(150)
         layout.addWidget(self.lineEdit_distance, 0, 1)
 
-        label_time = QLabel('<font size="4"> Time </font>')
+        label_time = QLabel('<font size="4"><b> Time </b></font>')
         self.lineEdit_time = QLineEdit()
         self.lineEdit_time.setPlaceholderText('Please enter time: HH:MM:SS')
         self.lineEdit_time.setMaxLength(8)
         layout.addWidget(label_time, 1, 0)
+        self.lineEdit_time.setMinimumWidth(150)
         layout.addWidget(self.lineEdit_time, 1, 1)
 
         button_upload = QPushButton('Input Data')
+        button_upload.setMinimumWidth(150)
         button_upload.clicked.connect(self.input_data)
-        layout.addWidget(button_upload, 2, 0, 1, 2)
+        layout.addWidget(button_upload, 2, 1, 1, 1)
         layout.setRowMinimumHeight(2, 75)
 
         label_total_time = QLabel(
-            '<font size="4"> Calculate total time </font>')
+            '<font size="4"><b> Total time </b></font>')
         self.lineEdit_total_time = QLineEdit()
         self.lineEdit_total_time.setPlaceholderText(
             'period type, period value')
@@ -106,7 +110,7 @@ class RunDataForm(QWidget):
         layout.addWidget(button_upload_tt, 3, 2, 1, 2)
 
         label_total_distance = QLabel(
-            '<font size="4"> Calculate total distance </font>')
+            '<font size="4"><b> Total distance </b></font>')
         self.lineEdit_total_distance = QLineEdit()
         self.lineEdit_total_distance.setPlaceholderText(
             'period type, period value')
@@ -119,7 +123,7 @@ class RunDataForm(QWidget):
         layout.addWidget(button_upload_td, 4, 2, 1, 2)
 
         label_average_temp = QLabel(
-            '<font size="4"> Calculate average temp </font>')
+            '<font size="4"><b> Average temp </b></font>')
         self.lineEdit_average_temp = QLineEdit()
         self.lineEdit_average_temp.setPlaceholderText(
             'period type, period value')
