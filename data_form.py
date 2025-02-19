@@ -157,7 +157,6 @@ class RunDataForm(QWidget):
     def input_data(self):
         """
         This method input data to the input_file in the following format:
-        This method input data to the input_file in the following format:
         week number, distance and time
         """
         week_number = str(self.get_week_number())
@@ -181,9 +180,6 @@ class RunDataForm(QWidget):
                         try:
                             max_id = max(max_id, int(row[0]))
                         except ValueError:
-                            print("The first column is not a valid integer."
-                                  "Make sure the CSV file is properly"
-                                  " formatted.")
                             print("The first column is not a valid integer."
                                   "Make sure the CSV file is properly"
                                   " formatted.")
