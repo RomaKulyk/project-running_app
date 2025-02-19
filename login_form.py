@@ -1,4 +1,5 @@
 import sys
+import csv
 from data_form import RunDataForm
 from PyQt5.QtWidgets import (QApplication,
                              QWidget,
@@ -9,18 +10,21 @@ from PyQt5.QtWidgets import (QApplication,
                              QMessageBox)
 from PyQt5.QtGui import QPixmap, QPainter
 
+credentials_file = 'user_credentials.csv'
 
 # Subclass QWidget to customize your application's main widget
 class LoginForm(QWidget):
     """
     init
-        This is an inizialization method
+        This is an initialization method
     check_creds
         This is a method to check if user has a permission to use app
     open_run_data_form
-        This is a method which opens another window after authorisation
-    paine_event
-        Override the paint_event to handle custom painting for the widget
+        This is a method which opens another window after authorization
+    paint_event
+        Override the paintEvent to handle custom painting for the widget
+    sign_up
+        This is a method to sign up a new user
     """
     def __init__(self):
         super().__init__()
@@ -58,30 +62,61 @@ class LoginForm(QWidget):
         layout.addWidget(button_login, 2, 0, 1, 2)
         layout.setRowMinimumHeight(2, 75)
 
+        button_signup = QPushButton('Sign Up')
+        button_signup.clicked.connect(self.sign_up)
+        layout.addWidget(button_signup, 3, 0, 1, 2)
+        layout.setRowMinimumHeight(3, 75)
+
         self.setLayout(layout)
 
     def check_creds(self):
         """This is a method to check if user has a permission to use app"""
         msg = QMessageBox()
+        username = self.lineEdit_username.text()
+        password = self.lineEdit_password.text()
 
-        if self.lineEdit_username.text() == 'R2D2'\
-                and self.lineEdit_password.text() == '1234':
-            # It opens the second app's window if password and login is correct
-            self.open_run_data_form()
-            # It closes login window
-            self.close()
+        try:
+            with open(credentials_file, mode='r', newline='') as file:
+                reader = csv.reader(file)
+                for row in reader:
+                    if row[0] == username and row[1] == password:
+                        self.open_run_data_form()
+                        self.close()
+                        return
+            msg.setText('Incorrect Username or Password')
+            msg.exec_()
+        except FileNotFoundError:
+            msg.setText('No users found. Please sign up first.')
+            msg.exec_()
 
-        else:
-            msg.setText('Incorrect Password')
+    def sign_up(self):
+        """This is a method to sign up a new user"""
+        msg = QMessageBox()
+        username = self.lineEdit_username.text()
+        password = self.lineEdit_password.text()
+
+        if not username or not password:
+            msg.setText('Username and Password cannot be empty')
+            msg.exec_()
+            return
+
+        try:
+            with open(credentials_file, mode='a', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerow([username, password])
+            msg.setText('Sign Up Successful! You can now log in.')
+            msg.exec_()
+        except Exception as e:
+            msg.setText(f'An error occurred: {e}')
             msg.exec_()
 
     def open_run_data_form(self):
-        """This is a method which opens another window after authorisation"""
+        """This is a method which opens another window after authorization"""
         self.secondWindow = RunDataForm()
         self.secondWindow.show()
 
     def paintEvent(self, event):
-        """Override the paint_event to handle custom painting for the widget"""
+        """Override the paintEvent to handle custom painting for the widget"""
         painter = QPainter(self)
         painter.drawPixmap(self.rect(), self.image)
 
