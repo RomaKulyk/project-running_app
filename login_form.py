@@ -43,6 +43,8 @@ class LoginForm(QWidget):
             '<font size="4" color="white"><b> Username </b></font>')
         self.lineEdit_username = QLineEdit()
         self.lineEdit_username.setPlaceholderText('Please enter your username')
+        # Apply stylesheet for rounded corners
+        self.lineEdit_username.setStyleSheet("border-radius: 3px")
         layout.addWidget(label_name, 0, 0)
         layout.addWidget(self.lineEdit_username, 0, 1)
 
@@ -54,6 +56,8 @@ class LoginForm(QWidget):
         self.lineEdit_password.setEchoMode(QLineEdit.Password)
         # Set the maximum number of characters which can be entered to 8
         self.lineEdit_password.setMaxLength(8)
+        # Apply stylesheet for rounded corners
+        self.lineEdit_password.setStyleSheet("border-radius: 3px")
         layout.addWidget(label_password, 1, 0)
         layout.addWidget(self.lineEdit_password, 1, 1)
 

@@ -78,6 +78,8 @@ class RunDataForm(QWidget):
         self.lineEdit_distance = QLineEdit()
         self.lineEdit_distance.setPlaceholderText(
             'Please enter distance: KM:MM')
+        # Apply stylesheet for rounded corners
+        self.lineEdit_distance.setStyleSheet("border-radius: 3px")
         self.lineEdit_distance.setMaxLength(5)
         layout.addWidget(label_distance, 0, 0)
         self.lineEdit_distance.setMinimumWidth(150)
@@ -86,6 +88,8 @@ class RunDataForm(QWidget):
         label_time = QLabel('<font size="4"><b> Time </b></font>')
         self.lineEdit_time = QLineEdit()
         self.lineEdit_time.setPlaceholderText('Please enter time: HH:MM:SS')
+        # Apply stylesheet for rounded corners
+        self.lineEdit_time.setStyleSheet("border-radius: 3px")
         self.lineEdit_time.setMaxLength(8)
         layout.addWidget(label_time, 1, 0)
         self.lineEdit_time.setMinimumWidth(150)
@@ -102,6 +106,8 @@ class RunDataForm(QWidget):
         self.lineEdit_total_time = QLineEdit()
         self.lineEdit_total_time.setPlaceholderText(
             'period type, period value')
+        # Apply stylesheet for rounded corners
+        self.lineEdit_total_time.setStyleSheet("border-radius: 3px")
         layout.addWidget(label_total_time, 3, 0)
         layout.addWidget(self.lineEdit_total_time, 3, 1)
 
@@ -114,6 +120,8 @@ class RunDataForm(QWidget):
         self.lineEdit_total_distance = QLineEdit()
         self.lineEdit_total_distance.setPlaceholderText(
             'period type, period value')
+        # Apply stylesheet for rounded corners
+        self.lineEdit_total_distance.setStyleSheet("border-radius: 3px")
         layout.addWidget(label_total_distance, 4, 0)
         layout.addWidget(self.lineEdit_total_distance, 4, 1)
 
@@ -127,6 +135,8 @@ class RunDataForm(QWidget):
         self.lineEdit_average_temp = QLineEdit()
         self.lineEdit_average_temp.setPlaceholderText(
             'period type, period value')
+        # Apply stylesheet for rounded corners
+        self.lineEdit_average_temp.setStyleSheet("border-radius: 3px")
         layout.addWidget(label_average_temp, 5, 0)
         layout.addWidget(self.lineEdit_average_temp, 5, 1)
 
