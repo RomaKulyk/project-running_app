@@ -171,8 +171,7 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-# Results file
-running_data.csv
+# Results files
 backlog.rst
 DEMO's
 experiment.py
