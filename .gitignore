@@ -172,6 +172,5 @@ cython_debug/
 .pypirc
 
 # Results files
-backlog.rst
 DEMO's
 experiment.py
