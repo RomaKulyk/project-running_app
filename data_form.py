@@ -7,19 +7,20 @@ from PyQt5.QtWidgets import (QWidget,
                              QLabel,
                              QLineEdit,
                              QGridLayout,
-                             QTextEdit)
+                             QTextEdit,
+                            )
 from PyQt5.QtGui import QPixmap, QPainter
 
 today = str(date.today())
 input_file = 'running_data.csv'
+log_file = 'requests_log.txt'
 
 
 class RunDataForm(QWidget):
     """
     init
         This is an initialization method
-        This is an initialization method
-
+        
     get_week_number
         This method allows to get week's number
 
@@ -55,6 +56,10 @@ class RunDataForm(QWidget):
 
     print_the_whole_file
         This method prints the entire content of the input file
+
+    write_requests_to_file
+        This method writes all requests' results into a .txt log file with
+        a unique ID number and date
     """
 
     def __init__(self):
@@ -310,6 +315,7 @@ class RunDataForm(QWidget):
             print(result)
             self.text_edit.setPlainText(result)
             self.lineEdit_total_time.clear()
+            self.write_requests_to_file(result)
         except FileNotFoundError:
             print(f"File {input_file} not found.")
         except Exception as e:
@@ -345,6 +351,7 @@ class RunDataForm(QWidget):
             print(result)
             self.text_edit.setPlainText(result)
             self.lineEdit_total_distance.clear()
+            self.write_requests_to_file(result)
         except FileNotFoundError:
             print(f"File {input_file} not found.")
         except Exception as e:
@@ -399,6 +406,7 @@ class RunDataForm(QWidget):
             print(result)
             self.text_edit.setPlainText(result)
             self.lineEdit_average_temp.clear()
+            self.write_requests_to_file(result)
         except FileNotFoundError:
             print(f"File {input_file} not found.")
         except Exception as e:
@@ -409,12 +417,31 @@ class RunDataForm(QWidget):
         painter = QPainter(self)
         painter.drawPixmap(self.rect(), self.image)
 
-    def print_the_whole_file(self):
-        """This method prints the entire content of the input file"""
-        with open(input_file, mode='r', newline='') as file:
-            reader = csv.DictReader(file, delimiter='\t')
-            data_list = []
-            for row in reader:
-                data_list.append(row)
-        for row in data_list:
-            print(row)
+    def write_requests_to_file(self, result):
+        """This method writes all requests' results into a .txt log file with
+        a unique ID number and date"""
+        try:
+            # Open the log file in read mode to determine the current maximum unique ID
+            max_id = 0
+            try:
+                with open(log_file, mode='r', newline='') as infile:
+                    reader = csv.reader(infile, delimiter='\t')
+                    for row in reader:
+                        if row:
+                            try:
+                                max_id = max(max_id, int(row[0]))
+                            except ValueError:
+                                print("The first column is not a valid integer. Make sure the log file is properly formatted.")
+            except FileNotFoundError:
+                pass  # If the file does not exist, start with max_id = 0
+
+            new_unique_id = max_id + 1
+            current_datetime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+            with open(log_file, mode='a', newline='') as file:
+                writer = csv.writer(file, delimiter='\t')
+                writer.writerow([new_unique_id, current_datetime, result])
+            print("Request logged successfully!")
+        except Exception as e:
+            print(f"An error occurred while logging the request: {e}")
+

@@ -66,9 +66,11 @@ run(invoke it by date)
 TO-DO_19 - create unit test to cover all the functions.
 
 TO-D0_20 - find the way to enhance app with Copilot and put it into
- backlog for V3.0
+ backlog for V3.0.
+
+TO-D0_21 - check with pycodestyle for coherence to PEP-8.
 
 
 V3.0
 ----------
-TO-DO_21 - add possibility to enter date while input running data.
+TO-DO_22 - add possibility to enter date while input running data.
