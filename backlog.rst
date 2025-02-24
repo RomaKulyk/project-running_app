@@ -41,12 +41,13 @@ TO-DO_12 - Make design more attracktive and labels texts more readable:- DONE
         - make labels in white color to see the difference - DONE
         - find another image - DONE
 
-
 TO-DO_13 - create a write_requests_to_file function which will write all 
-requests' results into the log file.
+requests' results into the log file - DONE
 
 TO-DO_14 - update input_data function to allow enter only reasonable data into 
-the QLineEdit fields.
+the QLineEdit fields - DONE (by updating QLineEdit fields for entering running
+data with regular expression validator).
+
 
 TO-DO_15 - in running_data.csv file entered data s/b alligned with 
 the headers.
@@ -74,3 +75,14 @@ TO-D0_21 - check with pycodestyle for coherence to PEP-8.
 V3.0
 ----------
 TO-DO_22 - add possibility to enter date while input running data.
+TO-DO_23 - update input_data function to allow enter only reasonable data into 
+the QLineEdit fields for password and login.
+
+GIT-COMMANDS
+-------------------------------------
+git tag - to see all existing tag
+git tag <tag-name> - create a new tag
+git tag -d <tag-name> - delete tag
+-------------------------------------
+git branch -to see all existing branch
+git branch <branch name> - create a new branch

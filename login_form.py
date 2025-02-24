@@ -50,16 +50,16 @@ class LoginForm(QWidget):
 
         label_password = QLabel(
             '<font size="4" color="white"><b> Password </b></font>')
-        self.lineEdit_password = QLineEdit()
-        self.lineEdit_password.setPlaceholderText('Please enter your password')
+        self.line_edit_password = QLineEdit()
+        self.line_edit_password.setPlaceholderText('Please enter your password')
         # Hide the characters entered by user
-        self.lineEdit_password.setEchoMode(QLineEdit.Password)
+        self.line_edit_password.setEchoMode(QLineEdit.Password)
         # Set the maximum number of characters which can be entered to 8
-        self.lineEdit_password.setMaxLength(8)
+        self.line_edit_password.setMaxLength(8)
         # Apply stylesheet for rounded corners
-        self.lineEdit_password.setStyleSheet("border-radius: 3px")
+        self.line_edit_password.setStyleSheet("border-radius: 3px")
         layout.addWidget(label_password, 1, 0)
-        layout.addWidget(self.lineEdit_password, 1, 1)
+        layout.addWidget(self.line_edit_password, 1, 1)
 
         button_login = QPushButton('Login')
         button_login.clicked.connect(self.check_creds)
@@ -77,7 +77,7 @@ class LoginForm(QWidget):
         """This is a method to check if user has a permission to use app"""
         msg = QMessageBox()
         username = self.lineEdit_username.text()
-        password = self.lineEdit_password.text()
+        password = self.line_edit_password.text()
 
         try:
             with open(credentials_file, mode='r', newline='') as file:
@@ -97,7 +97,7 @@ class LoginForm(QWidget):
         """This is a method to sign up a new user"""
         msg = QMessageBox()
         username = self.lineEdit_username.text()
-        password = self.lineEdit_password.text()
+        password = self.line_edit_password.text()
 
         if not username or not password:
             msg.setText('Username and Password cannot be empty')

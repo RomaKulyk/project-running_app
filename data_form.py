@@ -9,7 +9,8 @@ from PyQt5.QtWidgets import (QWidget,
                              QGridLayout,
                              QTextEdit,
                             )
-from PyQt5.QtGui import QPixmap, QPainter
+from PyQt5.QtGui import QPixmap, QPainter, QRegExpValidator
+from PyQt5.QtCore import QRegExp
 
 today = str(date.today())
 input_file = 'running_data.csv'
@@ -80,25 +81,33 @@ class RunDataForm(QWidget):
 
         label_distance = QLabel(
             '<font size="4"><b> Distance </b></font>')
-        self.lineEdit_distance = QLineEdit()
-        self.lineEdit_distance.setPlaceholderText(
-            'Please enter distance: KM:MM')
+        self.line_edit_distance = QLineEdit()
+        self.line_edit_distance.setPlaceholderText(
+            'Please enter distance: KM.MM')
+        # Set a regular expression to enforce the KM.MM format
+        regex = QRegExp(r"^(?:[0-9]|[1-9][0-9])\.[0-9][0-9]$")
+        validator = QRegExpValidator(regex)
+        self.line_edit_distance.setValidator(validator)
         # Apply stylesheet for rounded corners
-        self.lineEdit_distance.setStyleSheet("border-radius: 3px")
-        self.lineEdit_distance.setMaxLength(5)
+        self.line_edit_distance.setStyleSheet("border-radius: 3px")
+        self.line_edit_distance.setMaxLength(5)
         layout.addWidget(label_distance, 0, 0)
-        self.lineEdit_distance.setMinimumWidth(150)
-        layout.addWidget(self.lineEdit_distance, 0, 1)
+        self.line_edit_distance.setMinimumWidth(150)
+        layout.addWidget(self.line_edit_distance, 0, 1)
 
         label_time = QLabel('<font size="4"><b> Time </b></font>')
-        self.lineEdit_time = QLineEdit()
-        self.lineEdit_time.setPlaceholderText('Please enter time: HH:MM:SS')
+        self.line_edit_time = QLineEdit()
+        self.line_edit_time.setPlaceholderText('Please enter time: HH:MM:SS')
+        # Set a regular expression to enforce the HH:MM:SS format
+        regex = QRegExp(r"^(?:[01]?\d|2[0-3]):[0-5]?\d:[0-5]?\d$")
+        validator = QRegExpValidator(regex)
+        self.line_edit_time.setValidator(validator)
         # Apply stylesheet for rounded corners
-        self.lineEdit_time.setStyleSheet("border-radius: 3px")
-        self.lineEdit_time.setMaxLength(8)
+        self.line_edit_time.setStyleSheet("border-radius: 3px")
+        self.line_edit_time.setMaxLength(8)
         layout.addWidget(label_time, 1, 0)
-        self.lineEdit_time.setMinimumWidth(150)
-        layout.addWidget(self.lineEdit_time, 1, 1)
+        self.line_edit_time.setMinimumWidth(150)
+        layout.addWidget(self.line_edit_time, 1, 1)
 
         button_upload = QPushButton('Input Data')
         button_upload.setMinimumWidth(150)
@@ -176,8 +185,8 @@ class RunDataForm(QWidget):
         """
         week_number = str(self.get_week_number())
 
-        new_row = [week_number, today, self.lineEdit_distance.text(),
-                   self.lineEdit_time.text()]
+        new_row = [week_number, today, self.line_edit_distance.text(),
+                   self.line_edit_time.text()]
 
         try:
             # Open the input file in read mode to determine
@@ -219,8 +228,8 @@ class RunDataForm(QWidget):
         except Exception as e:
             print(f"An error occurred: {e}")
 
-        self.lineEdit_distance.clear()
-        self.lineEdit_time.clear()
+        self.line_edit_distance.clear()
+        self.line_edit_time.clear()
 
     def calculate_total_time_from_input(self):
         """Extracts data from lineEdit_total_time and calls
