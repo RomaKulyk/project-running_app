@@ -86,3 +86,12 @@ git tag -d <tag-name> - delete tag
 -------------------------------------
 git branch -to see all existing branch
 git branch <branch name> - create a new branch
+git checkout <branch name> - switch to a branch
+git merge <branch name> - merge <branch name> to the current branch
+git push origin <branch name> - push the updated <branch name> to the remote repository
+git branch --merged - list all merged branches
+git branch --no-merged - list all no merged branches
+git branch -d <branch name> - to delete a local branch named <branch name>
+git push origin --delete <branch name> - to delete a remote branch named <branch name>
+
+
