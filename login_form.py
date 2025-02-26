@@ -41,12 +41,12 @@ class LoginForm(QWidget):
 
         label_name = QLabel(
             '<font size="4" color="white"><b> Username </b></font>')
-        self.lineEdit_username = QLineEdit()
-        self.lineEdit_username.setPlaceholderText('Please enter your username')
+        self.line_edit_username = QLineEdit()
+        self.line_edit_username.setPlaceholderText('Please enter your username')
         # Apply stylesheet for rounded corners
-        self.lineEdit_username.setStyleSheet("border-radius: 3px")
+        self.line_edit_username.setStyleSheet("border-radius: 3px")
         layout.addWidget(label_name, 0, 0)
-        layout.addWidget(self.lineEdit_username, 0, 1)
+        layout.addWidget(self.line_edit_username, 0, 1)
 
         label_password = QLabel(
             '<font size="4" color="white"><b> Password </b></font>')
@@ -76,7 +76,7 @@ class LoginForm(QWidget):
     def check_creds(self):
         """This is a method to check if user has a permission to use app"""
         msg = QMessageBox()
-        username = self.lineEdit_username.text()
+        username = self.line_edit_username.text()
         password = self.line_edit_password.text()
 
         try:
@@ -96,7 +96,7 @@ class LoginForm(QWidget):
     def sign_up(self):
         """This is a method to sign up a new user"""
         msg = QMessageBox()
-        username = self.lineEdit_username.text()
+        username = self.line_edit_username.text()
         password = self.line_edit_password.text()
 
         if not username or not password:

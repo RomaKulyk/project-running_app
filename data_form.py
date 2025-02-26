@@ -10,6 +10,8 @@ from PyQt5.QtWidgets import (QWidget,
                              QTextEdit,
                             )
 from PyQt5.QtGui import QPixmap, QPainter
+from PyQt5.QtGui import QPixmap, QPainter, QRegExpValidator
+from PyQt5.QtCore import QRegExp
 
 today = str(date.today())
 input_file = 'running_data.csv'
@@ -29,14 +31,14 @@ class RunDataForm(QWidget):
         week number, distance and time
 
     calculate_total_time_from_input
-        Extracts data from lineEdit_total_time and calls calculate_total_time
+        Extracts data from line_edit_total_time and calls calculate_total_time
 
     calculate_total_distance_from_input
-        Extracts data from lineEdit_total_distance and calls
+        Extracts data from line_edit_total_distance and calls
         calculate_total_distance
 
     calculate_average_temp_from_input
-        Extracts data from lineEdit_average_temp and calls
+        Extracts data from line_edit_average_temp and calls
         calculate_average_temp
 
     calculate_total_time
@@ -80,25 +82,33 @@ class RunDataForm(QWidget):
 
         label_distance = QLabel(
             '<font size="4"><b> Distance </b></font>')
-        self.lineEdit_distance = QLineEdit()
-        self.lineEdit_distance.setPlaceholderText(
+        self.line_edit_distance = QLineEdit()
+        self.line_edit_distance.setPlaceholderText(
             'Please enter distance: KM:MM')
+        # Set a regular expression to enforce the KM.MM format
+        regex = QRegExp(r"^(?:[0-9]|[1-9][0-9])\.[0-9][0-9]$")
+        validator = QRegExpValidator(regex)
+        self.line_edit_distance.setValidator(validator)
         # Apply stylesheet for rounded corners
-        self.lineEdit_distance.setStyleSheet("border-radius: 3px")
-        self.lineEdit_distance.setMaxLength(5)
+        self.line_edit_distance.setStyleSheet("border-radius: 3px")
+        self.line_edit_distance.setMaxLength(5)
         layout.addWidget(label_distance, 0, 0)
-        self.lineEdit_distance.setMinimumWidth(150)
-        layout.addWidget(self.lineEdit_distance, 0, 1)
+        self.line_edit_distance.setMinimumWidth(150)
+        layout.addWidget(self.line_edit_distance, 0, 1)
 
         label_time = QLabel('<font size="4"><b> Time </b></font>')
-        self.lineEdit_time = QLineEdit()
-        self.lineEdit_time.setPlaceholderText('Please enter time: HH:MM:SS')
+        self.line_edit_time = QLineEdit()
+        self.line_edit_time.setPlaceholderText('Please enter time: HH:MM:SS')
+        # Set a regular expression to enforce the HH:MM:SS format
+        regex = QRegExp(r"^(?:[01]?\d|2[0-3]):[0-5]?\d:[0-5]?\d$")
+        validator = QRegExpValidator(regex)
+        self.line_edit_time.setValidator(validator)
         # Apply stylesheet for rounded corners
-        self.lineEdit_time.setStyleSheet("border-radius: 3px")
-        self.lineEdit_time.setMaxLength(8)
+        self.line_edit_time.setStyleSheet("border-radius: 3px")
+        self.line_edit_time.setMaxLength(8)
         layout.addWidget(label_time, 1, 0)
-        self.lineEdit_time.setMinimumWidth(150)
-        layout.addWidget(self.lineEdit_time, 1, 1)
+        self.line_edit_time.setMinimumWidth(150)
+        layout.addWidget(self.line_edit_time, 1, 1)
 
         button_upload = QPushButton('Input Data')
         button_upload.setMinimumWidth(150)
@@ -108,13 +118,13 @@ class RunDataForm(QWidget):
 
         label_total_time = QLabel(
             '<font size="4"><b> Total time </b></font>')
-        self.lineEdit_total_time = QLineEdit()
-        self.lineEdit_total_time.setPlaceholderText(
+        self.line_edit_total_time = QLineEdit()
+        self.line_edit_total_time.setPlaceholderText(
             'period type, period value')
         # Apply stylesheet for rounded corners
-        self.lineEdit_total_time.setStyleSheet("border-radius: 3px")
+        self.line_edit_total_time.setStyleSheet("border-radius: 3px")
         layout.addWidget(label_total_time, 3, 0)
-        layout.addWidget(self.lineEdit_total_time, 3, 1)
+        layout.addWidget(self.line_edit_total_time, 3, 1)
 
         button_upload_tt = QPushButton('Calculate total time')
         button_upload_tt.clicked.connect(self.calculate_total_time_from_input)
@@ -122,13 +132,13 @@ class RunDataForm(QWidget):
 
         label_total_distance = QLabel(
             '<font size="4"><b> Total distance </b></font>')
-        self.lineEdit_total_distance = QLineEdit()
-        self.lineEdit_total_distance.setPlaceholderText(
+        self.line_edit_total_distance = QLineEdit()
+        self.line_edit_total_distance.setPlaceholderText(
             'period type, period value')
         # Apply stylesheet for rounded corners
-        self.lineEdit_total_distance.setStyleSheet("border-radius: 3px")
+        self.line_edit_total_distance.setStyleSheet("border-radius: 3px")
         layout.addWidget(label_total_distance, 4, 0)
-        layout.addWidget(self.lineEdit_total_distance, 4, 1)
+        layout.addWidget(self.line_edit_total_distance, 4, 1)
 
         button_upload_td = QPushButton('Calculate total distance')
         button_upload_td.clicked.connect(
@@ -137,13 +147,13 @@ class RunDataForm(QWidget):
 
         label_average_temp = QLabel(
             '<font size="4"><b> Average temp </b></font>')
-        self.lineEdit_average_temp = QLineEdit()
-        self.lineEdit_average_temp.setPlaceholderText(
+        self.line_edit_average_temp = QLineEdit()
+        self.line_edit_average_temp.setPlaceholderText(
             'period type, period value')
         # Apply stylesheet for rounded corners
-        self.lineEdit_average_temp.setStyleSheet("border-radius: 3px")
+        self.line_edit_average_temp.setStyleSheet("border-radius: 3px")
         layout.addWidget(label_average_temp, 5, 0)
-        layout.addWidget(self.lineEdit_average_temp, 5, 1)
+        layout.addWidget(self.line_edit_average_temp, 5, 1)
 
         button_upload_at = QPushButton(
             'Calculate average temp')
@@ -176,8 +186,8 @@ class RunDataForm(QWidget):
         """
         week_number = str(self.get_week_number())
 
-        new_row = [week_number, today, self.lineEdit_distance.text(),
-                   self.lineEdit_time.text()]
+        new_row = [week_number, today, self.line_edit_distance.text(),
+                   self.line_edit_time.text()]
 
         try:
             # Open the input file in read mode to determine
@@ -219,13 +229,13 @@ class RunDataForm(QWidget):
         except Exception as e:
             print(f"An error occurred: {e}")
 
-        self.lineEdit_distance.clear()
-        self.lineEdit_time.clear()
+        self.line_edit_distance.clear()
+        self.line_edit_time.clear()
 
     def calculate_total_time_from_input(self):
-        """Extracts data from lineEdit_total_time and calls
+        """Extracts data from line_edit_total_time and calls
            calculate_total_time"""
-        input_text = self.lineEdit_total_time.text()
+        input_text = self.line_edit_total_time.text()
         try:
             period_type, period_value = input_text.split(',')
             period_type = period_type.strip()
@@ -241,9 +251,9 @@ class RunDataForm(QWidget):
                 )
 
     def calculate_total_distance_from_input(self):
-        """Extracts data from lineEdit_total_distance and calls
+        """Extracts data from line_edit_total_distance and calls
         calculate_total_distance"""
-        input_text = self.lineEdit_total_distance.text()
+        input_text = self.line_edit_total_distance.text()
         try:
             period_type, period_value = input_text.split(',')
             period_type = period_type.strip()
@@ -259,9 +269,9 @@ class RunDataForm(QWidget):
                 )
 
     def calculate_average_temp_from_input(self):
-        """Extracts data from lineEdit_average_temp and calls
+        """Extracts data from line_edit_average_temp and calls
         calculate_average_temp"""
-        input_text = self.lineEdit_average_temp.text()
+        input_text = self.line_edit_average_temp.text()
         try:
             period_type, period_value = input_text.split(',')
             period_type = period_type.strip()
@@ -314,7 +324,7 @@ class RunDataForm(QWidget):
                       f" {total_time_str}")
             print(result)
             self.text_edit.setPlainText(result)
-            self.lineEdit_total_time.clear()
+            self.line_edit_total_time.clear()
             self.write_requests_to_file(result)
         except FileNotFoundError:
             print(f"File {input_file} not found.")
@@ -350,7 +360,7 @@ class RunDataForm(QWidget):
                       f" {total_distance:.2f} kms")
             print(result)
             self.text_edit.setPlainText(result)
-            self.lineEdit_total_distance.clear()
+            self.line_edit_total_distance.clear()
             self.write_requests_to_file(result)
         except FileNotFoundError:
             print(f"File {input_file} not found.")
@@ -405,7 +415,7 @@ class RunDataForm(QWidget):
                       f" {average_temp} per km")
             print(result)
             self.text_edit.setPlainText(result)
-            self.lineEdit_average_temp.clear()
+            self.line_edit_average_temp.clear()
             self.write_requests_to_file(result)
         except FileNotFoundError:
             print(f"File {input_file} not found.")

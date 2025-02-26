@@ -101,6 +101,7 @@ git push origin <branch name> - push the updated <branch name> to the remote rep
 git branch --merged - list all merged branches
 git branch --no-merged - list all no merged branches
 git branch -d <branch name> - to delete a local branch named <branch name>
+git branch -D <branch name> - to delete not fully merged local branch named <branch name>
 git push origin --delete <branch name> - to delete a remote branch named <branch name>
 
 Qt and PyQt5
@@ -108,3 +109,5 @@ PyQt5 is a Python binding of the Qt toolkit, developed by Riverbank Computing. W
 you write applications using PyQt5 what you are really doing is writing applications
 in Qt. The PyQt5 library is actually a wrapper around the C++ Qt library, which makes
 it possible to use it in Python.
+
+git rm --cached experiment.py
