@@ -54,10 +54,9 @@ the headers.
 (using Rainbow CSV extendion in Visual Studio and "Align CSV Columns with 
 whitespaces" option it breaks how the functions work.)
 
-TO-DO_16 - create a shortcat to run the app.
 
-TO-DO_17 - update input_data method for different users to have different 
-running_data.csv file
+TO-DO_16 - create a shortcut to run the app - DONE 
+
 
 TO-DO_18 - update existing functions:calculate_total_time, 
 calculate_total_distance, calculate_average_temp to add possibility to 
@@ -66,17 +65,27 @@ run(invoke it by date)
 
 TO-DO_19 - create unit test to cover all the functions.
 
+TO-DO_22 - add possibility to enter running data for certain date.
+
 TO-D0_20 - find the way to enhance app with Copilot and put it into
- backlog for V3.0.
+backlog for V3.0.
 
 TO-D0_21 - check with pycodestyle for coherence to PEP-8.
 
 
-V3.0
+V3.0(SQLite)
 ----------
-TO-DO_22 - add possibility to enter date while input running data.
+TO-DO_17 - update input_data method for different users to have different 
+running_data.csv file.
+SQLite is an in-process library that implements a self-contained, serverless,
+zero-configuration, transactional SQL database engine.
+
 TO-DO_23 - update input_data function to allow enter only reasonable data into 
 the QLineEdit fields for password and login.
+
+TO-DO_24 - As a user of an app I would like to have possibility to see the
+running data from five last runs.
+
 
 GIT-COMMANDS
 -------------------------------------
@@ -94,4 +103,8 @@ git branch --no-merged - list all no merged branches
 git branch -d <branch name> - to delete a local branch named <branch name>
 git push origin --delete <branch name> - to delete a remote branch named <branch name>
 
-
+Qt and PyQt5
+PyQt5 is a Python binding of the Qt toolkit, developed by Riverbank Computing. When
+you write applications using PyQt5 what you are really doing is writing applications
+in Qt. The PyQt5 library is actually a wrapper around the C++ Qt library, which makes
+it possible to use it in Python.

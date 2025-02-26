@@ -174,3 +174,5 @@ cython_debug/
 # Results files
 DEMO's
 experiment.py
+running_data_copy.py
+running_data_alligned.py
