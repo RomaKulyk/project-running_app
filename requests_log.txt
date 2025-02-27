@@ -20,3 +20,6 @@
 20	2025-02-27 10:21:18	Total time for week 7 is: 04:31:56
 21	2025-02-27 10:21:25	Total distance for year 2025: 328.20 kms
 22	2025-02-27 10:21:33	Average temp for month (2025, 2) is: 06:09 per km
+23	2025-02-27 16:19:42	Total time for run (2025, 2, 26) is: 01:55:43
+24	2025-02-27 16:21:07	Total time for run (2025, 2, 20) is: 01:51:13
+25	2025-02-27 16:21:34	Total time for run (2025, 2, 23) is: 01:24:12

@@ -7,8 +7,7 @@ from PyQt5.QtWidgets import (QWidget,
                              QLabel,
                              QLineEdit,
                              QGridLayout,
-                             QTextEdit,
-                            )
+                             QTextEdit)
 from PyQt5.QtGui import QPixmap, QPainter
 from PyQt5.QtGui import QPixmap, QPainter, QRegExpValidator
 from PyQt5.QtCore import QRegExp
@@ -22,7 +21,7 @@ class RunDataForm(QWidget):
     """
     init
         This is an initialization method
-        
+
     get_week_number
         This method allows to get week's number
 
@@ -457,7 +456,8 @@ class RunDataForm(QWidget):
         """This method writes all requests' results into a .txt log file with
         a unique ID number and date"""
         try:
-            # Open the log file in read mode to determine the current maximum unique ID
+            # Open the log file in read mode to determine the current maximum
+            # unique ID
             max_id = 0
             try:
                 with open(log_file, mode='r', newline='') as infile:
@@ -467,12 +467,16 @@ class RunDataForm(QWidget):
                             try:
                                 max_id = max(max_id, int(row[0]))
                             except ValueError:
-                                print("The first column is not a valid integer. Make sure the log file is properly formatted.")
+                                print(
+                                    "The first column is not a valid integer.\
+                                     Make sure the log file is properly\
+                                    formatted.")
             except FileNotFoundError:
                 pass  # If the file does not exist, start with max_id = 0
 
             new_unique_id = max_id + 1
-            current_datetime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            current_datetime = datetime.datetime.now().strftime(
+                "%Y-%m-%d %H:%M:%S")
 
             with open(log_file, mode='a', newline='') as file:
                 writer = csv.writer(file, delimiter='\t')
@@ -480,4 +484,3 @@ class RunDataForm(QWidget):
             print("Request logged successfully!")
         except Exception as e:
             print(f"An error occurred while logging the request: {e}")
-

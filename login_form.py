@@ -12,6 +12,7 @@ from PyQt5.QtGui import QPixmap, QPainter
 
 credentials_file = 'user_credentials.csv'
 
+
 # Subclass QWidget to customize your application's main widget
 class LoginForm(QWidget):
     """
@@ -42,7 +43,8 @@ class LoginForm(QWidget):
         label_name = QLabel(
             '<font size="4" color="white"><b> Username </b></font>')
         self.line_edit_username = QLineEdit()
-        self.line_edit_username.setPlaceholderText('Please enter your username')
+        self.line_edit_username.setPlaceholderText(
+            'Please enter your username')
         # Apply stylesheet for rounded corners
         self.line_edit_username.setStyleSheet("border-radius: 3px")
         layout.addWidget(label_name, 0, 0)
@@ -51,7 +53,8 @@ class LoginForm(QWidget):
         label_password = QLabel(
             '<font size="4" color="white"><b> Password </b></font>')
         self.line_edit_password = QLineEdit()
-        self.line_edit_password.setPlaceholderText('Please enter your password')
+        self.line_edit_password.setPlaceholderText(
+            'Please enter your password')
         # Hide the characters entered by user
         self.line_edit_password.setEchoMode(QLineEdit.Password)
         # Set the maximum number of characters which can be entered to 8
@@ -123,6 +126,7 @@ class LoginForm(QWidget):
         """Override the paintEvent to handle custom painting for the widget"""
         painter = QPainter(self)
         painter.drawPixmap(self.rect(), self.image)
+
 
 if __name__ == '__main__':
     # Create an instance of QApplication

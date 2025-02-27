@@ -48,29 +48,23 @@ TO-DO_14 - update input_data function to allow enter only reasonable data into
 the QLineEdit fields - DONE (by updating QLineEdit fields for entering running
 data with regular expression validator).
 
-
-TO-DO_15 - in running_data.csv file entered data s/b alligned with 
-the headers.
-(using Rainbow CSV extendion in Visual Studio and "Align CSV Columns with 
-whitespaces" option it breaks how the functions work.)
-
-
 TO-DO_16 - create a shortcut to run the app - DONE 
-
 
 TO-DO_18 - update existing functions:calculate_total_time, 
 calculate_total_distance, calculate_average_temp to add possibility to 
 calculate those parameters for the certain
-run(invoke it by date)
-
-TO-DO_19 - create unit test to cover all the functions.
-
-TO-DO_22 - add possibility to enter running data for certain date.
+run(invoke it by date) - DONE
 
 TO-D0_20 - find the way to enhance app with Copilot and put it into
-backlog for V3.0.
+backlog for V3.0 - DONE
 
-TO-D0_21 - check with pycodestyle for coherence to PEP-8.
+TO-D0_21 - check with pycodestyle for coherence to PEP-8 -DONE
+
+
+V2.1_testsing
+-----------
+TO-DO_19 - create unit test to cover all the functions.
+
 
 
 V3.0(SQLite)
@@ -80,11 +74,22 @@ running_data.csv file.
 SQLite is an in-process library that implements a self-contained, serverless,
 zero-configuration, transactional SQL database engine.
 
+TO-DO_22 - add possibility to enter running data for certain date.
+
 TO-DO_23 - update input_data function to allow enter only reasonable data into 
 the QLineEdit fields for password and login.
 
 TO-DO_24 - As a user of an app I would like to have possibility to see the
 running data from five last runs.
+
+TO-DO_25 - As a developer of an app I would like to have possibility to see the
+backlog im markdown format.
+
+TO-D0_26 - As a developer of an app I would like to have data_form.py file to
+be splitted in several smoller files.
+
+TO-DO_27 - as a user of RunningApp I would like to enter data into "QLineEdits"
+fields by clicking "Enter" button.
 
 
 GIT-COMMANDS
@@ -103,6 +108,16 @@ git branch --no-merged - list all no merged branches
 git branch -d <branch name> - to delete a local branch named <branch name>
 git branch -D <branch name> - to delete not fully merged local branch named <branch name>
 git push origin --delete <branch name> - to delete a remote branch named <branch name>
+-------------------------------------
+git stash - temporarily saves your uncommitted changes
+git stash list - shows a list of all stashed changes
+git stash apply - re-applies the most recently stashed changes
+git stash apply stash@{index} - applies stashed changes, where index is the number from the git stash list output
+git stash drop - removes the most recently stashed changes from the stash list
+git stash pop - re-applies the most recently stashed changes and removes them from the stash list
+git stash pop stash@{index} - to pop a specific stash from the list
+git stash clear - removes all stashes from the stash list
+-------------------------------------
 
 Qt and PyQt5
 PyQt5 is a Python binding of the Qt toolkit, developed by Riverbank Computing. When
@@ -111,3 +126,11 @@ in Qt. The PyQt5 library is actually a wrapper around the C++ Qt library, which 
 it possible to use it in Python.
 
 git rm --cached experiment.py
+
+NEVER RELEASED
+--------------
+TO-DO_15 - in running_data.csv file entered data s/b alligned with 
+the headers.
+(using Rainbow CSV extendion in Visual Studio and "Align CSV Columns with 
+whitespaces" option it breaks how the functions work.)
+
