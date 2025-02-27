@@ -2,3 +2,21 @@
 2	2025-02-23 12:20:47	Total time for month (2025, 1) is: 15:34:56
 3	2025-02-23 12:20:53	Average temp for year 2024 is: 06:53 per km
 4	2025-02-24 22:59:37	Total time for week 9 is: 02:14:47
+5	2025-02-27 09:10:42	Total time for week 8 is: 02:28:59
+6	2025-02-27 09:10:54	Total distance for month (2025, 2): 174.86 kms
+7	2025-02-27 09:11:32	Average temp for year 2025 is: 06:08 per km
+8	2025-02-27 10:00:18	Total time for week 7 is: 04:31:56
+9	2025-02-27 10:00:31	Total time for month (2025, 2) is: 17:58:02
+10	2025-02-27 10:06:52	Total time for run (2025, 2, 21) is: 00:37:46
+11	2025-02-27 10:07:06	Total time for run (2025, 2, 21) is: 00:37:46
+12	2025-02-27 10:07:19	Total time for run (2025, 2, 21) is: 00:37:46
+13	2025-02-27 10:07:40	Total time for week 6 is: 05:01:59
+14	2025-02-27 10:07:51	Total time for month (2025, 2) is: 17:58:02
+15	2025-02-27 10:07:57	Total time for year 2025 is: 33:32:58
+16	2025-02-27 10:08:20	Total time for run (2025, 2, 23) is: 01:24:12
+17	2025-02-27 10:20:04	Total time for run (2025, 1, 12) is: 00:46:48
+18	2025-02-27 10:20:30	Total distance for run (2024, 12, 31): 4.03 kms
+19	2025-02-27 10:21:02	Average temp for run (2025, 2, 23) is: 06:24 per km
+20	2025-02-27 10:21:18	Total time for week 7 is: 04:31:56
+21	2025-02-27 10:21:25	Total distance for year 2025: 328.20 kms
+22	2025-02-27 10:21:33	Average temp for month (2025, 2) is: 06:09 per km

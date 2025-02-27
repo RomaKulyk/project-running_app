@@ -76,7 +76,8 @@ class RunDataForm(QWidget):
         self.setMinimumWidth(250)
 
         text = "You will see your results here SOON!"\
-            "\nperiod type, period value\nweek, 7\nmonth, 2025-02\nyear, 2025"
+            "\nperiod type, period value\nrun, 2025-02-28\nweek, 7\
+             \nmonth, 2025-02\nyear, 2025"
 
         layout = QGridLayout()
 
@@ -241,6 +242,8 @@ class RunDataForm(QWidget):
             period_type = period_type.strip()
             if period_type == 'month':
                 period_value = tuple(map(int, period_value.strip().split('-')))
+            elif period_type == 'run':
+                period_value = tuple(map(int, period_value.strip().split('-')))
             else:
                 period_value = int(period_value.strip())
             self.calculate_total_time(period_type, period_value)
@@ -258,6 +261,8 @@ class RunDataForm(QWidget):
             period_type, period_value = input_text.split(',')
             period_type = period_type.strip()
             if period_type == 'month':
+                period_value = tuple(map(int, period_value.strip().split('-')))
+            elif period_type == 'run':
                 period_value = tuple(map(int, period_value.strip().split('-')))
             else:
                 period_value = int(period_value.strip())
@@ -277,6 +282,8 @@ class RunDataForm(QWidget):
             period_type = period_type.strip()
             if period_type == 'month':
                 period_value = tuple(map(int, period_value.strip().split('-')))
+            elif period_type == 'run':
+                period_value = tuple(map(int, period_value.strip().split('-')))
             else:
                 period_value = int(period_value.strip())
             self.calculate_average_temp(period_type, period_value)
@@ -288,7 +295,7 @@ class RunDataForm(QWidget):
 
     def calculate_total_time(self, period_type, period_value):
         """This method calculates total time for a given period
-           (week, month, year)"""
+           (run, week, month, year)"""
         total_time = timedelta()
 
         try:
@@ -299,6 +306,7 @@ class RunDataForm(QWidget):
                     date_parts = date_str.split('-')
                     row_year = int(date_parts[0])
                     row_month = int(date_parts[1])
+                    row_day = int(date_parts[2])
                     row_week = int(row['week']) if 'week' in row else None
 
                     time_str = row['time']
@@ -312,6 +320,11 @@ class RunDataForm(QWidget):
                           and row_month == period_value[1]):
                         total_time += duration
                     elif period_type == 'year' and row_year == period_value:
+                        total_time += duration
+                    elif (period_type == 'run'
+                          and row_year == period_value[0]
+                          and row_month == period_value[1]
+                          and row_day == period_value[2]):
                         total_time += duration
 
             total_seconds = int(total_time.total_seconds())
@@ -333,7 +346,7 @@ class RunDataForm(QWidget):
 
     def calculate_total_distance(self, period_type, period_value):
         """This method calculates total distance for a given period
-           (week, month, year)"""
+           (run, week, month, year)"""
         total_distance = 0.0
 
         try:
@@ -344,6 +357,7 @@ class RunDataForm(QWidget):
                     date_parts = date_str.split('-')
                     row_year = int(date_parts[0])
                     row_month = int(date_parts[1])
+                    row_day = int(date_parts[2])
                     row_week = int(row['week']) if 'week' in row else None
                     distance = float(row['distance'])
 
@@ -354,6 +368,11 @@ class RunDataForm(QWidget):
                           and row_month == period_value[1]):
                         total_distance += distance
                     elif period_type == 'year' and row_year == period_value:
+                        total_distance += distance
+                    elif (period_type == 'run'
+                          and row_year == period_value[0]
+                          and row_month == period_value[1]
+                          and row_day == period_value[2]):
                         total_distance += distance
 
             result = (f"Total distance for {period_type} {period_value}:"
@@ -369,7 +388,7 @@ class RunDataForm(QWidget):
 
     def calculate_average_temp(self, period_type, period_value):
         """This method calculates the average temp (time per km) for a given
-        period (week, month, year)"""
+        period (run, week, month, year)"""
         total_time = timedelta()
         total_distance = 0.0
 
@@ -381,6 +400,7 @@ class RunDataForm(QWidget):
                     date_parts = date_str.split('-')
                     row_year = int(date_parts[0])
                     row_month = int(date_parts[1])
+                    row_day = int(date_parts[2])
                     row_week = int(row['week']) if 'week' in row else None
 
                     time_str = row['time']
@@ -398,6 +418,12 @@ class RunDataForm(QWidget):
                         total_time += duration
                         total_distance += distance
                     elif period_type == 'year' and row_year == period_value:
+                        total_time += duration
+                        total_distance += distance
+                    elif (period_type == 'run'
+                          and row_year == period_value[0]
+                          and row_month == period_value[1]
+                          and row_day == period_value[2]):
                         total_time += duration
                         total_distance += distance
 
