@@ -69,27 +69,27 @@ TO-DO_19 - create unit test to cover all the functions.
 
 V3.0(SQLite)
 ----------
-TO-DO_17 - update input_data method for different users to have different 
-running_data.csv file.
+TO-DO_17 - As an app developer, I want to update the input_data method
+so that different users have a different running_data.csv file.
 SQLite is an in-process library that implements a self-contained, serverless,
 zero-configuration, transactional SQL database engine.
 
-TO-DO_22 - add possibility to enter running data for certain date.
+TO-DO_22 - As an app's user, I want to have the possibility to enter running data for a certain date.
 
-TO-DO_23 - update input_data function to allow enter only reasonable data into 
-the QLineEdit fields for password and login.
+TO-DO_23 - As a developer of an app, I would like to update the input_data function 
+to allow entering only reasonable data into the QLineEdit fields for password and login.
 
-TO-DO_24 - As a user of an app I would like to have possibility to see the
-running data from five last runs.
+TO-DO_24 -  As an app's user I would like to have the possibility to see the
+running data from the last five runs.
 
-TO-DO_25 - As a developer of an app I would like to have possibility to see the
-backlog im markdown format.
+TO-DO_25 - As a developer of an app, I would like to have the possibility to see the
+backlog in markdown format.
 
-TO-D0_26 - As a developer of an app I would like to have data_form.py file to
-be splitted in several smoller files.
+TO-D0_26 - As a developer of an app, I would like to have the data_form.py file to
+be split into several smaller files.
 
-TO-DO_27 - as a user of RunningApp I would like to enter data into "QLineEdits"
-fields by clicking "Enter" button.
+TO-DO_27 - As an app's user of RunningApp I would like to enter data into "QLineEdits"
+fields by clicking the "Enter" button.
 
 
 GIT-COMMANDS
