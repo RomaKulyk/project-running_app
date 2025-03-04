@@ -69,63 +69,29 @@ TO-DO_19 - create unit test to cover all the functions.
 
 V3.0(SQLite)
 ----------
-TO-DO_17 - As an app developer, I want to update the input_data method
+TO-DO_17 - As a developer, I want to update the input_data method
 so that different users have a different running_data.csv file.
 SQLite is an in-process library that implements a self-contained, serverless,
 zero-configuration, transactional SQL database engine.
 
-TO-DO_22 - As an app's user, I want to have the possibility to enter running data for a certain date.
+TO-DO_22 - As a user, I want to have the possibility to enter running data for
+a certain date.
 
-TO-DO_23 - As a developer of an app, I would like to update the input_data function 
-to allow entering only reasonable data into the QLineEdit fields for password and login.
+TO-DO_23 - As a developer, I want to update the input_data function to allow
+entering only reasonable data into the QLineEdit fields for password and login.
 
-TO-DO_24 -  As an app's user I would like to have the possibility to see the
+TO-DO_24 -  As a user, I want to have the possibility to see the
 running data from the last five runs.
 
-TO-DO_25 - As a developer of an app, I would like to have the possibility to see the
+TO-DO_25 - As a developer, I want to have the possibility to see the
 backlog in markdown format.
 
-TO-D0_26 - As a developer of an app, I would like to have the data_form.py file to
-be split into several smaller files.
+TO-D0_26 - As a developer, I want to have the data_form.py file to be split
+into several smaller files.
 
-TO-DO_27 - As an app's user of RunningApp I would like to enter data into "QLineEdits"
-fields by clicking the "Enter" button.
+TO-DO_27 - As a user, I want to enter data into "QLineEdits" fields by clicking
+the "Enter" button.
 
-
-GIT-COMMANDS
--------------------------------------
-git tag - to see all existing tag
-git tag <tag-name> - create a new tag
-git tag -d <tag-name> - delete tag
--------------------------------------
-git branch -to see all existing branch
-git branch <branch name> - create a new branch
-git checkout <branch name> - switch to a branch
-git merge <branch name> - merge <branch name> to the current branch
-git push origin <branch name> - push the updated <branch name> to the remote repository
-git branch --merged - list all merged branches
-git branch --no-merged - list all no merged branches
-git branch -d <branch name> - to delete a local branch named <branch name>
-git branch -D <branch name> - to delete not fully merged local branch named <branch name>
-git push origin --delete <branch name> - to delete a remote branch named <branch name>
--------------------------------------
-git stash - temporarily saves your uncommitted changes
-git stash list - shows a list of all stashed changes
-git stash apply - re-applies the most recently stashed changes
-git stash apply stash@{index} - applies stashed changes, where index is the number from the git stash list output
-git stash drop - removes the most recently stashed changes from the stash list
-git stash pop - re-applies the most recently stashed changes and removes them from the stash list
-git stash pop stash@{index} - to pop a specific stash from the list
-git stash clear - removes all stashes from the stash list
--------------------------------------
-
-Qt and PyQt5
-PyQt5 is a Python binding of the Qt toolkit, developed by Riverbank Computing. When
-you write applications using PyQt5 what you are really doing is writing applications
-in Qt. The PyQt5 library is actually a wrapper around the C++ Qt library, which makes
-it possible to use it in Python.
-
-git rm --cached experiment.py
 
 NEVER RELEASED
 --------------
