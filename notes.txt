@@ -1,0 +1,82 @@
+COPILOT
+-------
+@workspace
+@terminal
+/tests
+/docs
+
+SELENIUM & PYTEST
+-----------------
+pytest --html=report.html
+pytest --count=3
+
+GIT-COMMANDS
+-------------------------------------
+git tag - to see all existing tag
+git tag <tag-name> - create a new tag
+git tag -d <tag-name> - delete tag
+-------------------------------------
+git branch -to see all existing branch
+git branch <branch name> - create a new branch
+git checkout <branch name> - switch to a branch
+git merge <branch name> - merge <branch name> to the current branch
+git push origin <branch name> - push the updated <branch name> to the remote repository
+git branch --merged - list all merged branches
+git branch --no-merged - list all no merged branches
+git branch -d <branch name> - to delete a local branch named <branch name>
+git branch -D <branch name> - to delete not fully merged local branch named <branch name>
+git push origin --delete <branch name> - to delete a remote branch named <branch name>
+-------------------------------------
+git stash - temporarily saves your uncommitted changes
+git stash list - shows a list of all stashed changes
+git stash apply - re-applies the most recently stashed changes
+git stash apply stash@{index} - applies stashed changes, where index is the number from the git stash list output
+git stash drop - removes the most recently stashed changes from the stash list
+git stash pop - re-applies the most recently stashed changes and removes them from the stash list
+git stash pop stash@{index} - to pop a specific stash from the list
+git stash clear - removes all stashes from the stash list
+-------------------------------------
+
+Qt and PyQt5
+PyQt5 is a Python binding of the Qt toolkit, developed by Riverbank Computing. When
+you write applications using PyQt5 what you are really doing is writing applications
+in Qt. The PyQt5 library is actually a wrapper around the C++ Qt library, which makes
+it possible to use it in Python.
+
+git rm --cached experiment.py
+
+
+
+USER STORIES
+https://www.writingbeginner.com/how-to-write-a-user-story/
+User stories typically follow this format: As a [type of user], I want [goal] so that [reason].
+Example: “As a frequent traveler, I want to receive flight status updates so that I can plan my airport arrival accordingly.”
+
+Key Components of a User Story
+
+A well-written user story includes several essential components. Understanding these will help you create user stories that are both comprehensive and actionable.
+
+    User Role: Identify who the user is. This could be a specific type of user, like an “admin” or “customer,” or a more general role, like “end user.”
+    Goal: Specify what the user wants to achieve. This should be a single, clear objective.
+    Reason: Explain why the user wants to achieve this goal. This provides context and justification for the feature.
+    Acceptance Criteria: Acceptance Criteria: Set the expectations that have to be met for the user story to be closed.These are often written as a checklist of specific requirements.
+
+Example of Acceptance Criteria:
+
+For the user story: “As a customer, I want to receive an email confirmation so that I know my order has been processed.”
+
+https://www.atlassian.com/agile/project-management/user-stories
+
+User story template and examples
+
+User stories are often expressed in a simple sentence, structured as follows:
+
+“As a [persona], I [want to], [so that].”
+
+Markdown All in One, markdownlint, QACompanion, CoEqual
+
+test_cart.py
+test_footer.py
+test_main_menu.py
+test_search_field.py
+test_sorting.py
