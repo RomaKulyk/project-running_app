@@ -76,28 +76,28 @@ SQLite is an in-process library that implements a self-contained, serverless,
 zero-configuration, transactional SQL database engine.
 
 *TO-DO_22* - As a user, I want to have the possibility to enter running data for
-> a certain date.
+a certain date.
 
 *TO-DO_23* - As a developer, I want to update the input_data function to allow
-> entering only reasonable data into the QLineEdit fields for password and login.
+entering only reasonable data into the QLineEdit fields for password and login.
 
 *TO-DO_24* -  As a user, I want to have the possibility to see the
-> running data from the last five runs.
+running data from the last five runs.
 
 *TO-DO_25* - As a developer, I want to have the possibility to see the
-> backlog in markdown format.
+backlog in markdown format.
 
 *TO-D0_26* - As a developer, I want to have the data_form.py file to be split
-> into several smaller files.
+into several smaller files.
 
 *TO-DO_27* - As a user, I want to enter data into "QLineEdits" fields by clicking
-> the "Enter" button.
+the "Enter" button.
 
 
 ### NEVER RELEASED
 --------------
 *TO-DO_15* - in running_data.csv file entered data s/b alligned with 
-> the headers.
-> (using Rainbow CSV extendion in Visual Studio and "Align CSV Columns with 
-> whitespaces" option it breaks how the functions work.)
+the headers.
+(using Rainbow CSV extendion in Visual Studio and "Align CSV Columns with 
+whitespaces" option it breaks how the functions work.)
 
