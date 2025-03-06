@@ -22,7 +22,7 @@ instead of just printing it to terminal - **DONE**
 ### **V2.0**
 -----------
 *TO-DO_7* - Make hint in display visible after clearing result 
-from previous request - DONE
+from previous request - **DONE**
 
 *TO-DO_8* - After clicking on "Calculate ..." button appropriate QLineEdit 
 field s/b cleared - **DONE**
@@ -46,7 +46,7 @@ the QLineEdit fields - **DONE**
 requests' results into the log file - **DONE**
 
 *TO-DO_14* - update input_data function to allow enter only reasonable data into 
-the QLineEdit fields - DONE (by updating QLineEdit fields for entering running
+the QLineEdit fields - **DONE** (by updating QLineEdit fields for entering running
 data with regular expression validator).
 
 *TO-DO_16* - create a shortcut to run the app - **DONE** 
@@ -59,7 +59,7 @@ run(invoke it by date) - **DONE**
 *TO-D0_20* - find the way to enhance app with Copilot and put it into
 backlog for V3.0 - **DONE**
 
-*TO-D0_21* - check with pycodestyle for coherence to PEP-8 -DONE
+*TO-D0_21* - check with pycodestyle for coherence to PEP-8 - **DONE**
 
 
 ### V2.1_testsing
