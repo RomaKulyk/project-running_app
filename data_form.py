@@ -80,8 +80,13 @@ class RunDataForm(QWidget):
 
         layout = QGridLayout()
 
+
         label_distance = QLabel(
             '<font size="4"><b> Distance </b></font>')
+        # Provide an object name for the QLable widget
+        label_distance.setAccessibleName("Distance")
+
+
         self.line_edit_distance = QLineEdit()
         self.line_edit_distance.setPlaceholderText(
             'Please enter distance: KM:MM')
@@ -91,12 +96,19 @@ class RunDataForm(QWidget):
         self.line_edit_distance.setValidator(validator)
         # Apply stylesheet for rounded corners
         self.line_edit_distance.setStyleSheet("border-radius: 3px")
+        # Provide an object name for the QLineEdit widget
+        self.line_edit_distance.setAccessibleName("Distance Input")
         self.line_edit_distance.setMaxLength(5)
         layout.addWidget(label_distance, 0, 0)
         self.line_edit_distance.setMinimumWidth(150)
         layout.addWidget(self.line_edit_distance, 0, 1)
 
+
         label_time = QLabel('<font size="4"><b> Time </b></font>')
+        # Provide an object name for the QLable widget
+        label_time.setAccessibleName("Time")
+
+
         self.line_edit_time = QLineEdit()
         self.line_edit_time.setPlaceholderText('Please enter time: HH:MM:SS')
         # Set a regular expression to enforce the HH:MM:SS format
@@ -105,70 +117,121 @@ class RunDataForm(QWidget):
         self.line_edit_time.setValidator(validator)
         # Apply stylesheet for rounded corners
         self.line_edit_time.setStyleSheet("border-radius: 3px")
+        # Provide an object name for the QLineEdit widget
+        self.line_edit_time.setAccessibleName("Time Input")
         self.line_edit_time.setMaxLength(8)
         layout.addWidget(label_time, 1, 0)
         self.line_edit_time.setMinimumWidth(150)
         layout.addWidget(self.line_edit_time, 1, 1)
 
+
         button_upload = QPushButton('Input Data')
         button_upload.setMinimumWidth(150)
         button_upload.clicked.connect(self.input_data)
+        # Provide an object name and description for the QPushButton widget
+        button_upload.setAccessibleName("Input Data")
+        button_upload.setToolTip("Click to input data")
         layout.addWidget(button_upload, 2, 1, 1, 1)
         layout.setRowMinimumHeight(2, 75)
 
+
         label_total_time = QLabel(
             '<font size="4"><b> Total time </b></font>')
+        # Provide an object name for the QLable widget
+        label_total_time.setAccessibleName("Total time")
+
+
+
         self.line_edit_total_time = QLineEdit()
         self.line_edit_total_time.setPlaceholderText(
             'period type, period value')
         # Apply stylesheet for rounded corners
         self.line_edit_total_time.setStyleSheet("border-radius: 3px")
+        # Provide an object name for the QLineEdit widget
+        self.line_edit_total_time.setAccessibleName(
+            "Total time period's Input")
         layout.addWidget(label_total_time, 3, 0)
         layout.addWidget(self.line_edit_total_time, 3, 1)
 
+
         button_upload_tt = QPushButton('Calculate total time')
         button_upload_tt.clicked.connect(self.calculate_total_time_from_input)
+        # Provide an object name and description for the QPushButton widget
+        button_upload_tt.setAccessibleName("Total time")
+        button_upload_tt.setToolTip("Click to calculate total time")
         layout.addWidget(button_upload_tt, 3, 2, 1, 2)
+
 
         label_total_distance = QLabel(
             '<font size="4"><b> Total distance </b></font>')
+        # Provide an object name for the QLable widget
+        label_total_distance.setAccessibleName("Total distance")
+        
+
+
         self.line_edit_total_distance = QLineEdit()
         self.line_edit_total_distance.setPlaceholderText(
             'period type, period value')
         # Apply stylesheet for rounded corners
         self.line_edit_total_distance.setStyleSheet("border-radius: 3px")
+        # Provide an object name for the QLineEdit widget
+        self.line_edit_total_distance.setAccessibleName(
+            "Total distance period's Input")
         layout.addWidget(label_total_distance, 4, 0)
         layout.addWidget(self.line_edit_total_distance, 4, 1)
+
 
         button_upload_td = QPushButton('Calculate total distance')
         button_upload_td.clicked.connect(
             self.calculate_total_distance_from_input)
+        # Provide an object name and description for the QPushButton widget
+        button_upload_td.setAccessibleName("Total distance")
+        button_upload_td.setToolTip("Click to calculate total distance")
         layout.addWidget(button_upload_td, 4, 2, 1, 2)
+
 
         label_average_temp = QLabel(
             '<font size="4"><b> Average temp </b></font>')
+        # Provide an object name for the QLable widget
+        label_average_temp.setAccessibleName("Average temp")
+
+
         self.line_edit_average_temp = QLineEdit()
         self.line_edit_average_temp.setPlaceholderText(
             'period type, period value')
         # Apply stylesheet for rounded corners
         self.line_edit_average_temp.setStyleSheet("border-radius: 3px")
+        # Provide an object name for the QLineEdit widget
+        self.line_edit_average_temp.setAccessibleName(
+            "Average temp period's Input")
         layout.addWidget(label_average_temp, 5, 0)
         layout.addWidget(self.line_edit_average_temp, 5, 1)
+
 
         button_upload_at = QPushButton(
             'Calculate average temp')
         button_upload_at.clicked.connect(
             self.calculate_average_temp_from_input)
+        # Provide an object name and description for the QPushButton widget
+        button_upload_at.setAccessibleName("Average temp")
+        button_upload_at.setToolTip("Click to calculate average temp")
         layout.addWidget(button_upload_at, 5, 2, 1, 2)
+
 
         self.text_edit = QTextEdit()
         self.text_edit.setReadOnly(True)
         self.text_edit.setPlaceholderText(text)
         self.text_edit.setMaximumHeight(100)
+        # Provide an object name for the QTextEdit widget
+        self.text_edit.setAccessibleName(
+            "Text Edit for Results and Requests")
+
 
         ok_button = QPushButton("OK")
         ok_button.clicked.connect(self.text_edit.clear)
-
+        # Provide an object name and description for the QPushButton widget
+        ok_button.setAccessibleName("OK")
+        ok_button.setToolTip("Click to clear the text area")
         layout.addWidget(self.text_edit, 6, 0, 1, 2)
         layout.addWidget(ok_button)
 
