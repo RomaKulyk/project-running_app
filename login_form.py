@@ -47,6 +47,8 @@ class LoginForm(QWidget):
             'Please enter your username')
         # Apply stylesheet for rounded corners
         self.line_edit_username.setStyleSheet("border-radius: 3px")
+        # Provide an object name for the QLineEdit widget
+        self.line_edit_username.setAccessibleName("Username Input")
         layout.addWidget(label_name, 0, 0)
         layout.addWidget(self.line_edit_username, 0, 1)
 
@@ -61,6 +63,8 @@ class LoginForm(QWidget):
         self.line_edit_password.setMaxLength(8)
         # Apply stylesheet for rounded corners
         self.line_edit_password.setStyleSheet("border-radius: 3px")
+        # Provide an object name for the QLineEdit widget
+        self.line_edit_password.setAccessibleName("Password Input")
         layout.addWidget(label_password, 1, 0)
         layout.addWidget(self.line_edit_password, 1, 1)
 
@@ -68,11 +72,17 @@ class LoginForm(QWidget):
         button_login.clicked.connect(self.check_creds)
         layout.addWidget(button_login, 2, 0, 1, 2)
         layout.setRowMinimumHeight(2, 75)
+        # Provide an object name and description for the QLineEdit widget
+        button_login.setAccessibleName("Login")
+        button_login.setToolTip("Click to login")
 
         button_signup = QPushButton('Sign Up')
         button_signup.clicked.connect(self.sign_up)
         layout.addWidget(button_signup, 3, 0, 1, 2)
         layout.setRowMinimumHeight(3, 75)
+        # Provide an object name and description for the QLineEdit widget
+        button_signup.setAccessibleName("Sign up")
+        button_signup.setToolTip("Click to sign up")
 
         self.setLayout(layout)
 
