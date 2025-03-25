@@ -2,7 +2,11 @@ COPILOT
 -------
 @workspace
 @terminal
-/tests
+INLINE CHAT
+/tests - Generate unit tests for the selected function or class
+/explain - Provides an explanation of the selected code
+/suggest - Offers code suggestions based on current context
+/comment - Converts comments into code snippets
 /docs
 
 ROBOT FRAMEWORK
@@ -99,8 +103,3 @@ User stories are often expressed in a simple sentence, structured as follows:
 
 Markdown All in One, markdownlint, QACompanion, CoEqual
 
-test_cart.py
-test_footer.py
-test_main_menu.py
-test_search_field.py
-test_sorting.py
