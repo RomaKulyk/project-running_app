@@ -44,7 +44,7 @@ class LoginForm(QWidget):
         label_name = QLabel(
             '<font size="4" color="white"><b> Username </b></font>')
         # Provide an object name for the QLable widget
-        label_name.setAccessibleName("Username")
+        label_name.setObjectName("Username")
         
 
 
@@ -54,7 +54,7 @@ class LoginForm(QWidget):
         # Apply stylesheet for rounded corners
         self.line_edit_username.setStyleSheet("border-radius: 3px")
         # Provide an object name for the QLineEdit widget
-        self.line_edit_username.setAccessibleName("Username Input")
+        self.line_edit_username.setObjectName("Username Input")
         layout.addWidget(label_name, 0, 0)
         layout.addWidget(self.line_edit_username, 0, 1)
 
@@ -62,7 +62,7 @@ class LoginForm(QWidget):
         label_password = QLabel(
             '<font size="4" color="white"><b> Password </b></font>')
         # Provide an object name for the QLable widget
-        label_password.setAccessibleName("Password")
+        label_password.setObjectName("Password")
 
 
         self.line_edit_password = QLineEdit()
@@ -75,7 +75,7 @@ class LoginForm(QWidget):
         # Apply stylesheet for rounded corners
         self.line_edit_password.setStyleSheet("border-radius: 3px")
         # Provide an object name for the QLineEdit widget
-        self.line_edit_password.setAccessibleName("Password Input")
+        self.line_edit_password.setObjectName("Password Input")
         layout.addWidget(label_password, 1, 0)
         layout.addWidget(self.line_edit_password, 1, 1)
 
@@ -85,7 +85,7 @@ class LoginForm(QWidget):
         layout.addWidget(button_login, 2, 0, 1, 2)
         layout.setRowMinimumHeight(2, 75)
         # Provide an object name and description for the QPushButton widget
-        button_login.setAccessibleName("Login")
+        button_login.setObjectName("Login")
         button_login.setToolTip("Click to login")
 
 
@@ -94,7 +94,7 @@ class LoginForm(QWidget):
         layout.addWidget(button_signup, 3, 0, 1, 2)
         layout.setRowMinimumHeight(3, 75)
         # Provide an object name and description for the QPushButton widget
-        button_signup.setAccessibleName("Sign up")
+        button_signup.setObjectName("Sign up")
         button_signup.setToolTip("Click to sign up")
 
         self.setLayout(layout)
