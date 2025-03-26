@@ -1,13 +1,21 @@
 COPILOT
 -------
-@workspace
-@terminal
+AGENTS
+@workspace - is aware of your entire workspace
+@terminal - helps you chat with Copilot to interact with the terminal
+@file - focuses on the content of a specific file
+@directory - consider the contents of a specific directory
+
 INLINE CHAT
 /tests - Generate unit tests for the selected function or class
 /explain - Provides an explanation of the selected code
 /suggest - Offers code suggestions based on current context
 /comment - Converts comments into code snippets
-/docs
+/fix - Propose a fix for the problems in the selected code
+/doc - Is intended for writing documentation
+/generate - Generates code to answer the specified question
+/help - Gets help on how to use Copilot chat
+/optimize - Analyzes and improves the runtime of the selected code
 
 ROBOT FRAMEWORK
 -------------------------------------

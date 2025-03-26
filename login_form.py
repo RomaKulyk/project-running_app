@@ -46,8 +46,6 @@ class LoginForm(QWidget):
         # Provide an object name for the QLable widget
         label_name.setObjectName("Username")
         
-
-
         self.line_edit_username = QLineEdit()
         self.line_edit_username.setPlaceholderText(
             'Please enter your username')
