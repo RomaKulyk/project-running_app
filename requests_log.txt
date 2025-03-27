@@ -25,3 +25,7 @@
 25	2025-02-27 16:21:34	Total time for run (2025, 2, 23) is: 01:24:12
 26	2025-03-26 12:03:13	Total time for run (2025, 3, 25) is: 00:46:49
 27	2025-03-26 12:06:23	Total time for week 7 is: 04:31:56
+28	2025-03-27 12:16:47	Total time for week 12 is: 04:24:41
+29	2025-03-27 12:17:00	Total distance for month (2, 2025): 0.00 kms
+30	2025-03-27 12:17:23	Total distance for month (2025, 3): 162.26 kms
+31	2025-03-27 12:17:37	Average temp for year 2025 is: 06:04 per km

@@ -74,9 +74,11 @@ class RunDataForm(QWidget):
         self.setMinimumHeight(300)
         self.setMinimumWidth(250)
 
-        text = "You will see your results here SOON!"\
-            "\nperiod type, period value\nrun, 2025-02-28\nweek, 7\
-             \nmonth, 2025-02\nyear, 2025"
+        text = (
+            "You will see your results here SOON!\n"
+            "period type, period value\nrun, 2025-02-28\nweek, 7\n"
+            "month, 2025-02\nyear, 2025"
+            )
 
         layout = QGridLayout()
 
