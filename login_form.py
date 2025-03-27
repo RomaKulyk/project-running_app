@@ -1,161 +1,117 @@
 import sys
 import csv
 from data_form import RunDataForm
-from PyQt5.QtWidgets import (QApplication,
-                             QWidget,
-                             QPushButton,
-                             QLabel,
-                             QLineEdit,
-                             QGridLayout,
+from PyQt5.QtWidgets import (QApplication, 
+                             QWidget, 
+                             QPushButton, 
+                             QLabel, 
+                             QLineEdit, 
+                             QGridLayout, 
                              QMessageBox)
 from PyQt5.QtGui import QPixmap, QPainter
 
 credentials_file = 'user_credentials.csv'
 
 
-# Subclass QWidget to customize your application's main widget
 class LoginForm(QWidget):
-    """
-    init
-        This is an initialization method
-    check_creds
-        This is a method to check if user has a permission to use app
-    open_run_data_form
-        This is a method which opens another window after authorization
-    paint_event
-        Override the paintEvent to handle custom painting for the widget
-    sign_up
-        This is a method to sign up a new user
-    """
     def __init__(self):
         super().__init__()
-        # Load image from images folder
         self.image = QPixmap("images/image_4.jpg")
-        # Set window title
         self.setWindowTitle('Running App')
-        # Set window sizes
         self.resize(325, 475)
-        self.setMinimumHeight(300)
-        self.setMinimumWidth(250)
+        self.setMinimumSize(250, 300)
 
+        self.init_ui()
+
+    def init_ui(self):
         layout = QGridLayout()
 
+        self.line_edit_username = self.add_input_field(
+            layout, "Username", "Please enter your username", 0)
+        self.line_edit_password = self.add_input_field(
+            layout, "Password", "Please enter your password", 1, 
+            is_password=True)
 
-        label_name = QLabel(
-            '<font size="4" color="white"><b> Username </b></font>')
-        # Provide an object name for the QLable widget
-        label_name.setObjectName("Username")
-        
-        self.line_edit_username = QLineEdit()
-        self.line_edit_username.setPlaceholderText(
-            'Please enter your username')
-        # Apply stylesheet for rounded corners
-        self.line_edit_username.setStyleSheet("border-radius: 3px")
-        # Provide an object name for the QLineEdit widget
-        self.line_edit_username.setObjectName("Username Input")
-        layout.addWidget(label_name, 0, 0)
-        layout.addWidget(self.line_edit_username, 0, 1)
-
-
-        label_password = QLabel(
-            '<font size="4" color="white"><b> Password </b></font>')
-        # Provide an object name for the QLable widget
-        label_password.setObjectName("Password")
-
-
-        self.line_edit_password = QLineEdit()
-        self.line_edit_password.setPlaceholderText(
-            'Please enter your password')
-        # Hide the characters entered by user
-        self.line_edit_password.setEchoMode(QLineEdit.Password)
-        # Set the maximum number of characters which can be entered to 8
-        self.line_edit_password.setMaxLength(8)
-        # Apply stylesheet for rounded corners
-        self.line_edit_password.setStyleSheet("border-radius: 3px")
-        # Provide an object name for the QLineEdit widget
-        self.line_edit_password.setObjectName("Password Input")
-        layout.addWidget(label_password, 1, 0)
-        layout.addWidget(self.line_edit_password, 1, 1)
-
-
-        button_login = QPushButton('Login')
-        button_login.clicked.connect(self.check_creds)
-        layout.addWidget(button_login, 2, 0, 1, 2)
-        layout.setRowMinimumHeight(2, 75)
-        # Provide an object name and description for the QPushButton widget
-        button_login.setObjectName("Login")
-        button_login.setToolTip("Click to login")
-
-
-        button_signup = QPushButton('Sign Up')
-        button_signup.clicked.connect(self.sign_up)
-        layout.addWidget(button_signup, 3, 0, 1, 2)
-        layout.setRowMinimumHeight(3, 75)
-        # Provide an object name and description for the QPushButton widget
-        button_signup.setObjectName("Sign up")
-        button_signup.setToolTip("Click to sign up")
+        self.add_button(layout, "Login", self.check_creds, 2)
+        self.add_button(layout, "Sign Up", self.sign_up, 3)
 
         self.setLayout(layout)
 
+    def add_input_field(
+            self, layout, label_text, placeholder, row, is_password=False):
+        label = QLabel(
+            f'<font size="4" color="white"><b> {label_text} </b></font>')
+        label.setObjectName(label_text)
+        layout.addWidget(label, row, 0)
+
+        line_edit = QLineEdit()
+        line_edit.setPlaceholderText(placeholder)
+        line_edit.setStyleSheet("border-radius: 3px")
+        line_edit.setObjectName(f"{label_text} Input")
+        if is_password:
+            line_edit.setEchoMode(QLineEdit.Password)
+            line_edit.setMaxLength(8)
+        layout.addWidget(line_edit, row, 1)
+
+        return line_edit
+
+    def add_button(self, layout, text, callback, row):
+        button = QPushButton(text)
+        button.clicked.connect(callback)
+        button.setObjectName(text)
+        button.setToolTip(f"Click to {text.lower()}")
+        layout.addWidget(button, row, 0, 1, 2)
+        layout.setRowMinimumHeight(row, 75)
+
     def check_creds(self):
-        """This is a method to check if user has a permission to use app"""
-        msg = QMessageBox()
         username = self.line_edit_username.text()
         password = self.line_edit_password.text()
 
         try:
             with open(credentials_file, mode='r', newline='') as file:
                 reader = csv.reader(file)
-                for row in reader:
-                    if row[0] == username and row[1] == password:
-                        self.open_run_data_form()
-                        self.close()
-                        return
-            msg.setText('Incorrect Username or Password')
-            msg.exec_()
+                if any(
+                    row[0] == username and row[1] == password for row in reader
+                ):
+                    self.open_run_data_form()
+                    self.close()
+                    return
+            self.show_message('Incorrect Username or Password')
         except FileNotFoundError:
-            msg.setText('No users found. Please sign up first.')
-            msg.exec_()
+            self.show_message('No users found. Please sign up first.')
 
     def sign_up(self):
-        """This is a method to sign up a new user"""
-        msg = QMessageBox()
         username = self.line_edit_username.text()
         password = self.line_edit_password.text()
 
         if not username or not password:
-            msg.setText('Username and Password cannot be empty')
-            msg.exec_()
+            self.show_message('Username and Password cannot be empty')
             return
 
         try:
             with open(credentials_file, mode='a', newline='') as file:
                 writer = csv.writer(file)
                 writer.writerow([username, password])
-            msg.setText('Sign Up Successful! You can now log in.')
-            msg.exec_()
+            self.show_message('Sign Up Successful! You can now log in.')
         except Exception as e:
-            msg.setText(f'An error occurred: {e}')
-            msg.exec_()
+            self.show_message(f'An error occurred: {e}')
 
     def open_run_data_form(self):
-        """This is a method which opens another window after authorization"""
         self.secondWindow = RunDataForm()
         self.secondWindow.show()
 
+    def show_message(self, text):
+        msg = QMessageBox()
+        msg.setText(text)
+        msg.exec_()
+
     def paintEvent(self, event):
-        """Override the paintEvent to handle custom painting for the widget"""
         painter = QPainter(self)
         painter.drawPixmap(self.rect(), self.image)
 
 
 if __name__ == '__main__':
-    # Create an instance of QApplication
     app = QApplication(sys.argv)
-
-    # Create an instance of a QLoginForm
     form = LoginForm()
     form.show()
-
-    # To start up the event loop
     sys.exit(app.exec_())

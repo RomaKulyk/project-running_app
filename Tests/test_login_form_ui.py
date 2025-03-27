@@ -61,7 +61,7 @@ class TestLoginFormUI(unittest.TestCase):
 
     def test_signup_button(self):
         """Test the sign-up button properties."""
-        signup_button = self.form.findChild(QPushButton, "Sign up")
+        signup_button = self.form.findChild(QPushButton, "Sign Up")
         self.assertIsNotNone(signup_button)
         self.assertEqual(signup_button.text(), 'Sign Up')
         self.assertEqual(signup_button.toolTip(), "Click to sign up")
