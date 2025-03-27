@@ -32,11 +32,13 @@ class TestRunDataFormInit(unittest.TestCase):
 
     def test_line_edit_distance_placeholder(self):
         """Test if the distance input placeholder is set correctly."""
-        self.assertEqual(self.form.line_edit_distance.placeholderText(), 'Please enter distance: KM:MM')
+        self.assertEqual(self.form.line_edit_distance.placeholderText(), 
+                         'Please enter distance: KM.MM')
 
     def test_line_edit_time_placeholder(self):
         """Test if the time input placeholder is set correctly."""
-        self.assertEqual(self.form.line_edit_time.placeholderText(), 'Please enter time: HH:MM:SS')
+        self.assertEqual(self.form.line_edit_time.placeholderText(), 
+                         'Please enter time: HH:MM:SS')
 
     def test_text_edit_placeholder(self):
         """Test if the text edit placeholder is set correctly."""
@@ -45,7 +47,8 @@ class TestRunDataFormInit(unittest.TestCase):
             "period type, period value\nrun, 2025-02-28\nweek, 7\n"
             "month, 2025-02\nyear, 2025"
         )
-        self.assertEqual(self.form.text_edit.placeholderText(), expected_placeholder)
+        self.assertEqual(
+            self.form.text_edit.placeholderText(), expected_placeholder)
 
 if __name__ == '__main__':
     unittest.main()
