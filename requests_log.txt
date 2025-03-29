@@ -29,3 +29,7 @@
 29	2025-03-27 12:17:00	Total distance for month (2, 2025): 0.00 kms
 30	2025-03-27 12:17:23	Total distance for month (2025, 3): 162.26 kms
 31	2025-03-27 12:17:37	Average temp for year 2025 is: 06:04 per km
+32	2025-03-28 11:11:23	Total time for week 7 is: 04:31:56
+33	2025-03-28 11:11:35	Total distance for month (2025, 3) is: 162.26 kms
+34	2025-03-28 11:11:55	Average temp for year 2025 is: 06:04 per km
+35	2025-03-28 11:12:16	Total time for week 7 is: 04:31:56
