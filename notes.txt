@@ -1,16 +1,51 @@
 COPILOT
 -------
-@workspace
-@terminal
-/tests
-/docs
+AGENTS
+@workspace - is aware of your entire workspace
+@terminal - helps you chat with Copilot to interact with the terminal
+@file - focuses on the content of a specific file
+@directory - consider the contents of a specific directory
+
+INLINE CHAT
+/tests - Generate unit tests for the selected function or class
+/explain - Provides an explanation of the selected code
+/suggest - Offers code suggestions based on current context
+/comment - Converts comments into code snippets
+/fix - Propose a fix for the problems in the selected code
+/doc - Is intended for writing documentation
+/generate - Generates code to answer the specified question
+/help - Gets help on how to use Copilot chat
+/optimize - Analyzes and improves the runtime of the selected code
+
+ROBOT FRAMEWORK
+-------------------------------------
+robot <path to test case> -execute the test case, or all test cases in folder
+robot --randomize ALL <path to test case> - execute all test cases in folder in random order
+robot -i <tag name> - execute all test cases which have certain tag
+robot -i <tag name1>OR<tag name2> - execute all test cases which have certain tag1 or tag1
+robot -i <tag name1>AND<tag name2> - execute all test cases which have certain tag1 and tag1
+robot -i <path to test case> --loglevel INFO/DEBUG/TRACE - execute test case with different logging level
+robot -d <folder name> <path to test case> - execute the test case and put results of execution in certain folder
+
+robot -d Output --randomize ALL -i demo2ORdemo1 --loglevel  TRACE .\Tests\
+
+VIRTUAL ENVIRONEMENTS
+-------------------------------------
+python -m venv <environement-name> - create the virtual environement
+environement-name\Scripts\activate - activate virtual environement
+environement-name\Scripts\deactivate - deactivate virtual environement
+
 
 SELENIUM & PYTEST
------------------
+-------------------------------------
 pytest --html=report.html
 pytest --count=3
 
+
 GIT-COMMANDS
+-------------------------------------
+git clone <repository-url> - it creates a copy of a remote repository on your
+local machine.
 -------------------------------------
 git tag - to see all existing tag
 git tag <tag-name> - create a new tag
@@ -36,6 +71,7 @@ git stash pop - re-applies the most recently stashed changes and removes them fr
 git stash pop stash@{index} - to pop a specific stash from the list
 git stash clear - removes all stashes from the stash list
 -------------------------------------
+
 
 Qt and PyQt5
 PyQt5 is a Python binding of the Qt toolkit, developed by Riverbank Computing. When
@@ -75,8 +111,3 @@ User stories are often expressed in a simple sentence, structured as follows:
 
 Markdown All in One, markdownlint, QACompanion, CoEqual
 
-test_cart.py
-test_footer.py
-test_main_menu.py
-test_search_field.py
-test_sorting.py

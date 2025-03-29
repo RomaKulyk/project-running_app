@@ -1,4 +1,3 @@
-import sys
 import datetime
 from datetime import date, timedelta
 import csv
@@ -7,8 +6,8 @@ from PyQt5.QtWidgets import (QWidget,
                              QLabel,
                              QLineEdit,
                              QGridLayout,
-                             QTextEdit)
-from PyQt5.QtGui import QPixmap, QPainter
+                             QTextEdit
+                             )
 from PyQt5.QtGui import QPixmap, QPainter, QRegExpValidator
 from PyQt5.QtCore import QRegExp
 
@@ -16,471 +15,292 @@ today = str(date.today())
 input_file = 'running_data.csv'
 log_file = 'requests_log.txt'
 
-
 class RunDataForm(QWidget):
     """
-    init
-        This is an initialization method
+    RunDataForm is a PyQt5-based QWidget class that provides a graphical user
+    interface for a running app. It allows users to input and calculate various
+    metrics related to running, such as distance, time, total time, total
+    distance, and average pace.
 
-    get_week_number
-        This method allows to get week's number
+    Attributes:
+        image (QPixmap):
+            Background image for the widget.
+        text_edit (QTextEdit):
+            A text area for displaying results and messages.
+        line_edit_distance (QLineEdit):
+            Input field for entering the running distance.
+        line_edit_time (QLineEdit):
+            Input field for entering the running time.
+        line_edit_total_time (QLineEdit):
+            Input field for calculating total time.
+        line_edit_total_distance (QLineEdit):
+            Input field for calculating total distance.
+        line_edit_average_temp (QLineEdit):
+            Input field for calculating average pace.
 
-    input_data
-        This method input data to the input_file in the following format:
-        week number, distance and time
-
-    calculate_total_time_from_input
-        Extracts data from line_edit_total_time and calls calculate_total_time
-
-    calculate_total_distance_from_input
-        Extracts data from line_edit_total_distance and calls
-        calculate_total_distance
-
-    calculate_average_temp_from_input
-        Extracts data from line_edit_average_temp and calls
-        calculate_average_temp
-
-    calculate_total_time
-        This method calculates total time for a given period
-        (week, month, year)
-
-    calculate_total_distance
-        This method calculates total distance for a given period
-        (week, month, year)
-
-    calculate_average_temp
-        This method calculates average temp for a given period
-        (week, month, year)
-
-    paintEvent
-        Override the paintEvent to handle custom painting for the widget
-
-    print_the_whole_file
-        This method prints the entire content of the input file
-
-    write_requests_to_file
-        This method writes all requests' results into a .txt log file with
-        a unique ID number and date
+    Methods:
+        __init__():
+            Initializes the RunDataForm widget.
+        init_ui():
+            Sets up the user interface layout and components.
+        add_input_field(layout, label_text, placeholder, regex, max_len, row):
+            Adds a labeled input field to the layout.
+        add_button(layout, text, callback, row, col):
+            Adds a button to the layout.
+        get_week_number():
+            Returns the current week number of the year.
+        input_data():
+            Handles the input of distance and time data and appends it to a 
+            file.
+        calculate_total_time_from_input():
+            Processes input and calculates total time.
+        calculate_total_distance_from_input():
+            Processes input and calculates total distance.
+        calculate_average_temp_from_input():
+            Processes input and calculates average pace.
+        process_input(line_edit, callback):
+            Parses and validates input text, then calls the callback.
+        calculate_total_time(period_type, period_value):
+            Calculates total time for a given period.
+        calculate_total_distance(period_type, period_value):
+            Calculates total distance for a given period.
+        calculate_average_temp(period_type, period_value):
+            Calculates average pace for a given period.
+        calculate_metric(period_type, period_value, field, formatter):
+            Generic method to calculate a metric.
+        aggregate_data(period_type, period_value, field=None):
+            Aggregates data for a given period and field.
+        match_period(row, period_type, period_value):
+            Checks if a data row matches the specified period.
+        format_time(total_time):
+            Formats a timedelta object into a string (HH:MM:SS).
+        display_result(result):
+            Displays a result in the text area and logs it to a file.
+        append_to_file(file_path, new_row, header):
+            Appends a new row of data to a file.
+        write_requests_to_file(result):
+            Logs a result to a file with a timestamp.
+        paintEvent(event):
+            Paints the background image on the widget.
     """
 
     def __init__(self):
         super().__init__()
-        # Load image
         self.image = QPixmap("images/image_3_running_man.jpg")
-        # Set window title
         self.setWindowTitle('Running App')
-        # Set window sizes
         self.resize(360, 475)
-        self.setMinimumHeight(300)
-        self.setMinimumWidth(250)
+        self.setMinimumSize(250, 300)
 
-        text = "You will see your results here SOON!"\
-            "\nperiod type, period value\nrun, 2025-02-28\nweek, 7\
-             \nmonth, 2025-02\nyear, 2025"
+        self.init_ui()
 
+    def init_ui(self):
         layout = QGridLayout()
 
-        label_distance = QLabel(
-            '<font size="4"><b> Distance </b></font>')
-        self.line_edit_distance = QLineEdit()
-        self.line_edit_distance.setPlaceholderText(
-            'Please enter distance: KM:MM')
-        # Set a regular expression to enforce the KM.MM format
-        regex = QRegExp(r"^(?:[0-9]|[1-9][0-9])\.[0-9][0-9]$")
-        validator = QRegExpValidator(regex)
-        self.line_edit_distance.setValidator(validator)
-        # Apply stylesheet for rounded corners
-        self.line_edit_distance.setStyleSheet("border-radius: 3px")
-        self.line_edit_distance.setMaxLength(5)
-        layout.addWidget(label_distance, 0, 0)
-        self.line_edit_distance.setMinimumWidth(150)
-        layout.addWidget(self.line_edit_distance, 0, 1)
+        self.add_input_field(layout, "Distance", "Please enter distance: KM.MM",
+                             r"^(?:[0-9]|[1-9][0-9])\.[0-9][0-9]$", 5, 0)
+        self.add_input_field(layout, "Time", "Please enter time: HH:MM:SS",
+                             r"^(?:[01]?\d|2[0-3]):[0-5]?\d:[0-5]?\d$", 8, 1)
 
-        label_time = QLabel('<font size="4"><b> Time </b></font>')
-        self.line_edit_time = QLineEdit()
-        self.line_edit_time.setPlaceholderText('Please enter time: HH:MM:SS')
-        # Set a regular expression to enforce the HH:MM:SS format
-        regex = QRegExp(r"^(?:[01]?\d|2[0-3]):[0-5]?\d:[0-5]?\d$")
-        validator = QRegExpValidator(regex)
-        self.line_edit_time.setValidator(validator)
-        # Apply stylesheet for rounded corners
-        self.line_edit_time.setStyleSheet("border-radius: 3px")
-        self.line_edit_time.setMaxLength(8)
-        layout.addWidget(label_time, 1, 0)
-        self.line_edit_time.setMinimumWidth(150)
-        layout.addWidget(self.line_edit_time, 1, 1)
+        self.add_button(layout, "Input Data", self.input_data, 2, 1)
 
-        button_upload = QPushButton('Input Data')
-        button_upload.setMinimumWidth(150)
-        button_upload.clicked.connect(self.input_data)
-        layout.addWidget(button_upload, 2, 1, 1, 1)
-        layout.setRowMinimumHeight(2, 75)
+        self.add_input_field(layout, "Total time", "period type, period value",
+                             None, None, 3)
+        self.add_button(layout, "Calculate total time",
+                        self.calculate_total_time_from_input, 3, 2)
 
-        label_total_time = QLabel(
-            '<font size="4"><b> Total time </b></font>')
-        self.line_edit_total_time = QLineEdit()
-        self.line_edit_total_time.setPlaceholderText(
-            'period type, period value')
-        # Apply stylesheet for rounded corners
-        self.line_edit_total_time.setStyleSheet("border-radius: 3px")
-        layout.addWidget(label_total_time, 3, 0)
-        layout.addWidget(self.line_edit_total_time, 3, 1)
+        self.add_input_field(layout, "Total distance",
+                             "period type, period value", None, None, 4)
+        self.add_button(layout, "Calculate total distance",
+                        self.calculate_total_distance_from_input, 4, 2)
 
-        button_upload_tt = QPushButton('Calculate total time')
-        button_upload_tt.clicked.connect(self.calculate_total_time_from_input)
-        layout.addWidget(button_upload_tt, 3, 2, 1, 2)
-
-        label_total_distance = QLabel(
-            '<font size="4"><b> Total distance </b></font>')
-        self.line_edit_total_distance = QLineEdit()
-        self.line_edit_total_distance.setPlaceholderText(
-            'period type, period value')
-        # Apply stylesheet for rounded corners
-        self.line_edit_total_distance.setStyleSheet("border-radius: 3px")
-        layout.addWidget(label_total_distance, 4, 0)
-        layout.addWidget(self.line_edit_total_distance, 4, 1)
-
-        button_upload_td = QPushButton('Calculate total distance')
-        button_upload_td.clicked.connect(
-            self.calculate_total_distance_from_input)
-        layout.addWidget(button_upload_td, 4, 2, 1, 2)
-
-        label_average_temp = QLabel(
-            '<font size="4"><b> Average temp </b></font>')
-        self.line_edit_average_temp = QLineEdit()
-        self.line_edit_average_temp.setPlaceholderText(
-            'period type, period value')
-        # Apply stylesheet for rounded corners
-        self.line_edit_average_temp.setStyleSheet("border-radius: 3px")
-        layout.addWidget(label_average_temp, 5, 0)
-        layout.addWidget(self.line_edit_average_temp, 5, 1)
-
-        button_upload_at = QPushButton(
-            'Calculate average temp')
-        button_upload_at.clicked.connect(
-            self.calculate_average_temp_from_input)
-        layout.addWidget(button_upload_at, 5, 2, 1, 2)
+        self.add_input_field(layout, "Average temp",
+                             "period type, period value", None, None, 5)
+        self.add_button(layout, "Calculate average temp",
+                        self.calculate_average_temp_from_input, 5, 2)
 
         self.text_edit = QTextEdit()
         self.text_edit.setReadOnly(True)
-        self.text_edit.setPlaceholderText(text)
+        self.text_edit.setPlaceholderText(
+            "You will see your results here SOON!\n"
+            "period type, period value\nrun, 2025-02-28\nweek, 7\n"
+            "month, 2025-02\nyear, 2025"
+        )
         self.text_edit.setMaximumHeight(100)
+        layout.addWidget(self.text_edit, 6, 0, 1, 2)
 
         ok_button = QPushButton("OK")
         ok_button.clicked.connect(self.text_edit.clear)
-
-        layout.addWidget(self.text_edit, 6, 0, 1, 2)
-        layout.addWidget(ok_button)
+        layout.addWidget(ok_button, 6, 2)
 
         self.setLayout(layout)
 
+    def add_input_field(
+            self, layout, label_text, placeholder, regex, max_len, row):
+        label = QLabel(f'<font size="4"><b> {label_text} </b></font>')
+        label.setAccessibleName(label_text)
+        layout.addWidget(label, row, 0)
+
+        line_edit = QLineEdit()
+        line_edit.setPlaceholderText(placeholder)
+        line_edit.setStyleSheet("border-radius: 3px")
+        line_edit.setAccessibleName(f"{label_text} Input")
+        if regex:
+            validator = QRegExpValidator(QRegExp(regex))
+            line_edit.setValidator(validator)
+        if max_len:
+            line_edit.setMaxLength(max_len)
+        layout.addWidget(line_edit, row, 1)
+
+        setattr(self, f"line_edit_{label_text.lower().replace(' ', '_')}",
+                line_edit)
+
+    def add_button(self, layout, text, callback, row, col):
+        button = QPushButton(text)
+        button.setMinimumWidth(150)
+        button.clicked.connect(callback)
+        button.setAccessibleName(text)
+        button.setToolTip(f"Click to {text.lower()}")
+        layout.addWidget(button, row, col, 1, 2)
+
     def get_week_number(self):
-        """This method allows to get week's number"""
-        today = datetime.date.today()
-        return today.isocalendar()[1]
+        return datetime.date.today().isocalendar()[1]
 
     def input_data(self):
-        """
-        This method input data to the input_file in the following format:
-        week number, distance and time
-        """
         week_number = str(self.get_week_number())
-
         new_row = [week_number, today, self.line_edit_distance.text(),
                    self.line_edit_time.text()]
-
-        try:
-            # Open the input file in read mode to determine
-            # the current maximum unique ID
-            with open(input_file, mode='r', newline='') as infile:
-                reader = csv.reader(infile, delimiter='\t')
-                try:
-                    header = next(reader)  # Read the header
-                except StopIteration:
-                    header = []  # Handle case where file is empty
-
-                max_id = 0
-                for row in reader:
-                    if row:
-                        try:
-                            max_id = max(max_id, int(row[0]))
-                        except ValueError:
-                            print("The first column is not a valid integer."
-                                  "Make sure the CSV file is properly"
-                                  " formatted.")
-
-            new_unique_id = max_id + 1
-
-            # Open the input file in append mode to add the new row
-            with open(input_file, mode='a', newline='') as outfile:
-                writer = csv.writer(outfile, delimiter='\t')
-                # If the file was empty, write the header first
-                if not header:
-                    # Replace with your actual header names
-                    header = ['id', 'week', 'date', 'distance', 'time']
-                    writer.writerow(header)
-                # Insert the unique ID at the beginning of the row
-                new_row.insert(0, new_unique_id)
-                writer.writerow(new_row)
-
-            print("New row with unique ID has been added successfully!")
-        except FileNotFoundError:
-            print("The file wasn't found. Please check file path and name.")
-        except Exception as e:
-            print(f"An error occurred: {e}")
-
+        self.append_to_file(
+            input_file, new_row, ['id', 'week', 'date', 'distance', 'time'])
         self.line_edit_distance.clear()
         self.line_edit_time.clear()
 
     def calculate_total_time_from_input(self):
-        """Extracts data from line_edit_total_time and calls
-           calculate_total_time"""
-        input_text = self.line_edit_total_time.text()
-        try:
-            period_type, period_value = input_text.split(',')
-            period_type = period_type.strip()
-            if period_type == 'month':
-                period_value = tuple(map(int, period_value.strip().split('-')))
-            elif period_type == 'run':
-                period_value = tuple(map(int, period_value.strip().split('-')))
-            else:
-                period_value = int(period_value.strip())
-            self.calculate_total_time(period_type, period_value)
-        except ValueError:
-            self.text_edit.setPlainText(
-                "Invalid input format."
-                " Please enter 'period type, period value'."
-                )
+        self.process_input(
+            self.line_edit_total_time, self.calculate_total_time)
 
     def calculate_total_distance_from_input(self):
-        """Extracts data from line_edit_total_distance and calls
-        calculate_total_distance"""
-        input_text = self.line_edit_total_distance.text()
-        try:
-            period_type, period_value = input_text.split(',')
-            period_type = period_type.strip()
-            if period_type == 'month':
-                period_value = tuple(map(int, period_value.strip().split('-')))
-            elif period_type == 'run':
-                period_value = tuple(map(int, period_value.strip().split('-')))
-            else:
-                period_value = int(period_value.strip())
-            self.calculate_total_distance(period_type, period_value)
-        except ValueError:
-            self.text_edit.setPlainText(
-                "Invalid input format."
-                " Please enter 'period type, period value'."
-                )
+        self.process_input(
+            self.line_edit_total_distance, self.calculate_total_distance)
 
     def calculate_average_temp_from_input(self):
-        """Extracts data from line_edit_average_temp and calls
-        calculate_average_temp"""
-        input_text = self.line_edit_average_temp.text()
+        self.process_input(
+            self.line_edit_average_temp, self.calculate_average_temp)
+
+    def process_input(self, line_edit, callback):
+        input_text = line_edit.text()
         try:
             period_type, period_value = input_text.split(',')
             period_type = period_type.strip()
-            if period_type == 'month':
-                period_value = tuple(map(int, period_value.strip().split('-')))
-            elif period_type == 'run':
+            if period_type in ['month', 'run']:
                 period_value = tuple(map(int, period_value.strip().split('-')))
             else:
                 period_value = int(period_value.strip())
-            self.calculate_average_temp(period_type, period_value)
+            callback(period_type, period_value)
         except ValueError:
             self.text_edit.setPlainText(
                 "Invalid input format."
-                " Please enter 'period type, period value'."
-                )
+                "Please enter 'period type, period value'."
+            )
 
     def calculate_total_time(self, period_type, period_value):
-        """This method calculates total time for a given period
-           (run, week, month, year)"""
-        total_time = timedelta()
-
-        try:
-            with open(input_file, mode='r', newline='') as file:
-                reader = csv.DictReader(file, delimiter='\t')
-                for row in reader:
-                    date_str = row['date']
-                    date_parts = date_str.split('-')
-                    row_year = int(date_parts[0])
-                    row_month = int(date_parts[1])
-                    row_day = int(date_parts[2])
-                    row_week = int(row['week']) if 'week' in row else None
-
-                    time_str = row['time']
-                    h, m, s = map(int, time_str.split(':'))
-                    duration = timedelta(hours=h, minutes=m, seconds=s)
-
-                    if period_type == 'week' and row_week == period_value:
-                        total_time += duration
-                    elif (period_type == 'month'
-                          and row_year == period_value[0]
-                          and row_month == period_value[1]):
-                        total_time += duration
-                    elif period_type == 'year' and row_year == period_value:
-                        total_time += duration
-                    elif (period_type == 'run'
-                          and row_year == period_value[0]
-                          and row_month == period_value[1]
-                          and row_day == period_value[2]):
-                        total_time += duration
-
-            total_seconds = int(total_time.total_seconds())
-            total_hours, remainder = divmod(total_seconds, 3600)
-            total_minutes, total_seconds = divmod(remainder, 60)
-            total_time_str = (f"{total_hours:02}:{total_minutes:02}:"
-                              f"{total_seconds:02}")
-
-            result = (f"Total time for {period_type} {period_value} is:"
-                      f" {total_time_str}")
-            print(result)
-            self.text_edit.setPlainText(result)
-            self.line_edit_total_time.clear()
-            self.write_requests_to_file(result)
-        except FileNotFoundError:
-            print(f"File {input_file} not found.")
-        except Exception as e:
-            print(f"An error occurred while processing the file: {e}")
+        self.calculate_metric(
+            period_type, period_value, 'time', self.format_time)
 
     def calculate_total_distance(self, period_type, period_value):
-        """This method calculates total distance for a given period
-           (run, week, month, year)"""
-        total_distance = 0.0
-
-        try:
-            with open(input_file, mode='r', newline='') as file:
-                reader = csv.DictReader(file, delimiter='\t')
-                for row in reader:
-                    date_str = row['date']
-                    date_parts = date_str.split('-')
-                    row_year = int(date_parts[0])
-                    row_month = int(date_parts[1])
-                    row_day = int(date_parts[2])
-                    row_week = int(row['week']) if 'week' in row else None
-                    distance = float(row['distance'])
-
-                    if period_type == 'week' and row_week == period_value:
-                        total_distance += distance
-                    elif (period_type == 'month'
-                          and row_year == period_value[0]
-                          and row_month == period_value[1]):
-                        total_distance += distance
-                    elif period_type == 'year' and row_year == period_value:
-                        total_distance += distance
-                    elif (period_type == 'run'
-                          and row_year == period_value[0]
-                          and row_month == period_value[1]
-                          and row_day == period_value[2]):
-                        total_distance += distance
-
-            result = (f"Total distance for {period_type} {period_value}:"
-                      f" {total_distance:.2f} kms")
-            print(result)
-            self.text_edit.setPlainText(result)
-            self.line_edit_total_distance.clear()
-            self.write_requests_to_file(result)
-        except FileNotFoundError:
-            print(f"File {input_file} not found.")
-        except Exception as e:
-            print(f"An error occurred while processing the file: {e}")
+        self.calculate_metric(
+            period_type, period_value, 'distance', lambda x: f"{x:.2f} kms")
 
     def calculate_average_temp(self, period_type, period_value):
-        """This method calculates the average temp (time per km) for a given
-        period (run, week, month, year)"""
+        total_time, total_distance = self.aggregate_data(
+            period_type, period_value)
+        if total_distance > 0:
+            avg_seconds = int(total_time.total_seconds() / total_distance)
+            avg_temp = f"{avg_seconds // 60:02}:{avg_seconds % 60:02}"
+        else:
+            avg_temp = "00:00"
+        self.display_result(
+            f"Average temp for {period_type} {period_value} is: "
+            f"{avg_temp} per km")
+
+    def calculate_metric(self, period_type, period_value, field, formatter):
+        total = self.aggregate_data(period_type, period_value, field)
+        self.display_result(
+            f"Total {field} for {period_type} {period_value} is: "
+            f"{formatter(total)}")
+
+    def aggregate_data(self, period_type, period_value, field=None):
         total_time = timedelta()
         total_distance = 0.0
-
         try:
             with open(input_file, mode='r', newline='') as file:
                 reader = csv.DictReader(file, delimiter='\t')
                 for row in reader:
-                    date_str = row['date']
-                    date_parts = date_str.split('-')
-                    row_year = int(date_parts[0])
-                    row_month = int(date_parts[1])
-                    row_day = int(date_parts[2])
-                    row_week = int(row['week']) if 'week' in row else None
-
-                    time_str = row['time']
-                    h, m, s = map(int, time_str.split(':'))
-                    duration = timedelta(hours=h, minutes=m, seconds=s)
-
-                    distance = float(row['distance'])
-
-                    if period_type == 'week' and row_week == period_value:
-                        total_time += duration
-                        total_distance += distance
-                    elif (period_type == 'month'
-                          and row_year == period_value[0]
-                          and row_month == period_value[1]):
-                        total_time += duration
-                        total_distance += distance
-                    elif period_type == 'year' and row_year == period_value:
-                        total_time += duration
-                        total_distance += distance
-                    elif (period_type == 'run'
-                          and row_year == period_value[0]
-                          and row_month == period_value[1]
-                          and row_day == period_value[2]):
-                        total_time += duration
-                        total_distance += distance
-
-            if total_distance > 0:
-                total_seconds = int(total_time.total_seconds())
-                average_temp_seconds = total_seconds / total_distance
-                average_minutes, average_seconds = divmod(
-                    average_temp_seconds, 60)
-                average_temp = (f"{int(average_minutes):02}:"
-                                f"{int(average_seconds):02}")
-            else:
-                average_temp = "00:00"
-
-            result = (f"Average temp for {period_type} {period_value} is:"
-                      f" {average_temp} per km")
-            print(result)
-            self.text_edit.setPlainText(result)
-            self.line_edit_average_temp.clear()
-            self.write_requests_to_file(result)
+                    if self.match_period(row, period_type, period_value):
+                        if field == 'time' or field is None:
+                            h, m, s = map(int, row['time'].split(':'))
+                            total_time += timedelta(
+                                hours=h, minutes=m, seconds=s)
+                        if field == 'distance' or field is None:
+                            total_distance += float(row['distance'])
+            return (total_time, total_distance) if field is None else \
+                total_time if field == 'time' else total_distance
         except FileNotFoundError:
             print(f"File {input_file} not found.")
         except Exception as e:
-            print(f"An error occurred while processing the file: {e}")
+            print(f"An error occurred: {e}")
 
-    def paintEvent(self, event):
-        """Override the paintEvent to handle custom painting for the widget"""
-        painter = QPainter(self)
-        painter.drawPixmap(self.rect(), self.image)
+    def match_period(self, row, period_type, period_value):
+        date_parts = list(map(int, row['date'].split('-')))
+        row_week = int(row['week']) if 'week' in row else None
+        if period_type == 'week' and row_week == period_value:
+            return True
+        elif period_type == 'month' and date_parts[:2] == list(period_value):
+            return True
+        elif period_type == 'year' and date_parts[0] == period_value:
+            return True
+        elif period_type == 'run' and date_parts == list(period_value):
+            return True
+        return False
 
-    def write_requests_to_file(self, result):
-        """This method writes all requests' results into a .txt log file with
-        a unique ID number and date"""
+    def format_time(self, total_time):
+        total_seconds = int(total_time.total_seconds())
+        hours, remainder = divmod(total_seconds, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        return f"{hours:02}:{minutes:02}:{seconds:02}"
+
+    def display_result(self, result):
+        print(result)
+        self.text_edit.setPlainText(result)
+        self.write_requests_to_file(result)
+
+    def append_to_file(self, file_path, new_row, header):
         try:
-            # Open the log file in read mode to determine the current maximum
-            # unique ID
             max_id = 0
             try:
-                with open(log_file, mode='r', newline='') as infile:
+                with open(file_path, mode='r', newline='') as infile:
                     reader = csv.reader(infile, delimiter='\t')
-                    for row in reader:
-                        if row:
-                            try:
-                                max_id = max(max_id, int(row[0]))
-                            except ValueError:
-                                print(
-                                    "The first column is not a valid integer.\
-                                     Make sure the log file is properly\
-                                    formatted.")
+                    header = next(reader, [])
+                    max_id = max(
+                        (int(row[0]) for row in reader if row), default=0)
             except FileNotFoundError:
-                pass  # If the file does not exist, start with max_id = 0
+                pass
 
-            new_unique_id = max_id + 1
-            current_datetime = datetime.datetime.now().strftime(
-                "%Y-%m-%d %H:%M:%S")
-
-            with open(log_file, mode='a', newline='') as file:
-                writer = csv.writer(file, delimiter='\t')
-                writer.writerow([new_unique_id, current_datetime, result])
-            print("Request logged successfully!")
+            new_row.insert(0, max_id + 1)
+            with open(file_path, mode='a', newline='') as outfile:
+                writer = csv.writer(outfile, delimiter='\t')
+                if not header:
+                    writer.writerow(header)
+                writer.writerow(new_row)
         except Exception as e:
-            print(f"An error occurred while logging the request: {e}")
+            print(f"An error occurred: {e}")
+
+    def write_requests_to_file(self, result):
+        self.append_to_file(
+            log_file, 
+            [datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), result], 
+            []
+        )
+
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        painter.drawPixmap(self.rect(), self.image)
