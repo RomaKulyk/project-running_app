@@ -119,6 +119,8 @@ class RunDataForm(QWidget):
                         self.calculate_average_temp_from_input, 5, 2)
 
         self.text_edit = QTextEdit()
+        self.text_edit.setAccessibleName("Text Display")
+        self.text_edit.setObjectName("Text Display")
         self.text_edit.setReadOnly(True)
         self.text_edit.setPlaceholderText(
             "You will see your results here SOON!\n"
@@ -138,12 +140,14 @@ class RunDataForm(QWidget):
             self, layout, label_text, placeholder, regex, max_len, row):
         label = QLabel(f'<font size="4"><b> {label_text} </b></font>')
         label.setAccessibleName(label_text)
+        label.setObjectName(label_text)
         layout.addWidget(label, row, 0)
 
         line_edit = QLineEdit()
         line_edit.setPlaceholderText(placeholder)
         line_edit.setStyleSheet("border-radius: 3px")
         line_edit.setAccessibleName(f"{label_text} Input")
+        line_edit.setObjectName(f"{label_text} Input")
         if regex:
             validator = QRegExpValidator(QRegExp(regex))
             line_edit.setValidator(validator)
@@ -159,6 +163,7 @@ class RunDataForm(QWidget):
         button.setMinimumWidth(150)
         button.clicked.connect(callback)
         button.setAccessibleName(text)
+        button.setObjectName(text)
         button.setToolTip(f"Click to {text.lower()}")
         layout.addWidget(button, row, col, 1, 2)
 
